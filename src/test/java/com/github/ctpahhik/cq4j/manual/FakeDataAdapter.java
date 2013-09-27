@@ -7,7 +7,7 @@ import com.github.ctpahhik.cq4j.common.IDataAdapter;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class FakeDataProviderImpl implements IDataAdapter {
+public class FakeDataAdapter implements IDataAdapter {
 
     @Override
     public Object getByName(String fieldName, Object data) {

@@ -26,7 +26,7 @@ public class BaseSqlPostProcess {
         Lexer lexer = new BaseSqlLexer(new ANTLRInputStream(new StringReader("case asd when 12 then 3 when 4 then 5 else 6 end or case when 12>3 and true then 3 when 4<5 then 5 else 6 end or position_array(3 in \"[2,3,4]\")>0 or position_array(3 in \"[2,3,4]\" from 2)>0 and 3 between '' and 2 or -1+1*2>4 and a not in (2,3,5) or true and d is not null")));
         TokenStream tStream = new CommonTokenStream(lexer);
         BaseSqlParser parser = new BaseSqlParser(tStream);
-        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(new FakeDataProviderImpl(), new FunctionsFactory());
+        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(new FakeDataAdapter(), new FunctionsFactory());
         IOperator compiled = parser.simpleCondition().accept(visitor);
         System.out.println(compiled);
         int level = 0;

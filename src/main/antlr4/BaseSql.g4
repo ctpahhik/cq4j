@@ -117,8 +117,7 @@ condition :
 ;
 
 predicate : 
-    value=BOOLEAN #Boolean
-    | value=expression #SkipPredicate
+    value=expression #SkipPredicate
     | value=expression IS NOT? NULL #IsNullPredicate
     | left=expression operator=( LT_EQ | LT | GT_EQ | GT | EQ | NOT_EQ ) right=expression #ComparePredicate
     | value=expression NOT? detailedPredicate=subPredicate #NegatablePredicate
@@ -156,7 +155,8 @@ function :
     ;
 
 primitive :
-    NULL #Null
+    BOOLEAN #Boolean
+    | NULL #Null
     | ID #Field
     | INT #Integer
     | FLOAT #Float
