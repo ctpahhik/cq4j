@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.manual;
 
-import com.github.ctpahhik.cq4j.common.FunctionsFactory;
+import com.github.ctpahhik.cq4j.functions.FunctionsFactory;
 import com.github.ctpahhik.cq4j.common.IOperator;
 import com.github.ctpahhik.cq4j.grammar.BaseSqlConditionCompilationVisitor;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlLexer;

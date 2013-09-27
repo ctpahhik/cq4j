@@ -25,12 +25,12 @@ public class CompareOperator extends AbstractOperator<Boolean> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Boolean evaluate() {
-        Comparable left = leftOp.evaluate();
+    public Boolean evaluate(Object data) {
+        Comparable left = leftOp.evaluate(data);
         if (left == null) {
             return null;
         }
-        Comparable right = rightOp.evaluate();
+        Comparable right = rightOp.evaluate(data);
         if (right == null) {
             return null;
         }

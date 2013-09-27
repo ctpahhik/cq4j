@@ -3,6 +3,7 @@ package com.github.ctpahhik.cq4j.functions;
 import com.github.ctpahhik.cq4j.common.IInFunction;
 import com.github.ctpahhik.cq4j.common.IOperator;
 import com.github.ctpahhik.cq4j.operations.AbstractOperator;
+import com.github.ctpahhik.cq4j.operations.ConstantOperator;
 
 /**
  * TODO: JavaDoc
@@ -14,31 +15,28 @@ public abstract class AbstractInFunction<T> extends AbstractOperator<T> implemen
     protected IOperator valueOp;
     protected IOperator inValueOp;
     protected IOperator<Integer> fromOp;
+    protected boolean hasFrom = false;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public IInFunction create(IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromOp) {
-        try {
-            AbstractInFunction<T> function = (AbstractInFunction<T>) this.clone();
-            function.setParameters(valueOp, inValueOp, fromOp);
-            return function;
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalArgumentException("Function must be cloneable");
-        }
-    }
-
-    private void setParameters(IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromOp) {
+    void setParameters(IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromOp) {
         this.valueOp = valueOp;
         this.inValueOp = inValueOp;
-        this.fromOp = fromOp;
+
+        hasFrom = (fromOp != null);
+        this.fromOp = fromOp == null ? new ConstantOperator<Integer>(getDefaultFrom()) : fromOp;
+    }
+
+    protected abstract Integer getDefaultFrom();
+
+    @Override
+    public boolean isPureFunction() {
+        return valueOp.isPureFunction() && inValueOp.isPureFunction() && fromOp.isPureFunction();
     }
 
     @Override
     public String toString() {
         return getName() + " (" +
                 valueOp +
-                " IN " + inValueOp +
-                (fromOp == null ? "" : " FROM " + fromOp) +
-                ')';
+                ") IN (" + inValueOp + ")" +
+                (hasFrom ? " FROM (" + fromOp + ")" : "");
     }
 }

@@ -20,13 +20,13 @@ public class AndOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
-    public Boolean evaluate() {
-        Boolean left = leftOp.evaluate();
+    public Boolean evaluate(Object data) {
+        Boolean left = leftOp.evaluate(data);
         if (left == null || !left) {
             return false; //lazy evaluation if first param is null or false
         }
 
-        return rightOp.evaluate();
+        return rightOp.evaluate(data);
     }
 
     @Override

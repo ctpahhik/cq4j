@@ -15,9 +15,9 @@ public class Nvl extends AbstractSimpleFunction<Object> {
     }
 
     @Override
-    public Object evaluate() {
+    public Object evaluate(Object data) {
         for (IOperator op : parameters) {
-            Object value = op.evaluate();
+            Object value = op.evaluate(data);
             if (value != null) {
                 return value;
             }

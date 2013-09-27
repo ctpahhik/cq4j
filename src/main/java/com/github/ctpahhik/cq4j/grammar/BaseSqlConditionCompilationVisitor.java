@@ -1,7 +1,7 @@
 package com.github.ctpahhik.cq4j.grammar;
 
-import com.github.ctpahhik.cq4j.common.FunctionsFactory;
-import com.github.ctpahhik.cq4j.common.IDataProvider;
+import com.github.ctpahhik.cq4j.functions.FunctionsFactory;
+import com.github.ctpahhik.cq4j.common.IDataAdapter;
 import com.github.ctpahhik.cq4j.common.IOperator;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor<IOperator> implements BaseSqlVisitor<IOperator> {
 
-    private IDataProvider dataProvider;
+    private IDataAdapter dataAdapter;
     private FunctionsFactory factory;
 
-    public BaseSqlConditionCompilationVisitor(IDataProvider dataProvider, FunctionsFactory factory) {
-        this.dataProvider = dataProvider;
+    public BaseSqlConditionCompilationVisitor(IDataAdapter dataAdapter, FunctionsFactory factory) {
+        this.dataAdapter = dataAdapter;
         this.factory = factory;
     }
 
@@ -45,7 +45,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
 
     @Override
     public IOperator visitField(@NotNull BaseSqlParser.FieldContext ctx) {
-        return new DataAccessOperator(dataProvider, ctx.getText());
+        return new DataAccessOperator(dataAdapter, ctx.getText());
     }
 
     @Override

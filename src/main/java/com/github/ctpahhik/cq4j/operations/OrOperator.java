@@ -19,12 +19,12 @@ public class OrOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
-    public Boolean evaluate() {
-        Boolean left = leftOp.evaluate();
+    public Boolean evaluate(Object data) {
+        Boolean left = leftOp.evaluate(data);
         if (left != null && left) {
             return true;  //lazy evaluation if first param is true
         }
-        Boolean right = rightOp.evaluate();
+        Boolean right = rightOp.evaluate(data);
         if (right != null && right) {
             return true;
         }

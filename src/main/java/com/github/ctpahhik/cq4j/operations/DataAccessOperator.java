@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IDataProvider;
+import com.github.ctpahhik.cq4j.common.IDataAdapter;
 
 /**
  * TODO: JavaDoc
@@ -9,11 +9,11 @@ import com.github.ctpahhik.cq4j.common.IDataProvider;
  */
 public class DataAccessOperator<T> extends AbstractOperator<T> {
 
-    private IDataProvider dataProvider;
+    private IDataAdapter dataProvider;
     private String fieldName;
     private int fieldId;
 
-    public DataAccessOperator(IDataProvider dataProvider, String fieldName) {
+    public DataAccessOperator(IDataAdapter dataProvider, String fieldName) {
         this.dataProvider = dataProvider;
         this.fieldName = fieldName;
         this.fieldId = dataProvider.getIdByName(fieldName);
@@ -21,8 +21,8 @@ public class DataAccessOperator<T> extends AbstractOperator<T> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public T evaluate() {
-        return (T)dataProvider.getById(fieldId);
+    public T evaluate(Object data) {
+        return (T)dataProvider.getById(fieldId, data);
     }
 
     @Override

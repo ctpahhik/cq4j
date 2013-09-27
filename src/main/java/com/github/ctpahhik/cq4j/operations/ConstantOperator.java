@@ -14,7 +14,7 @@ public class ConstantOperator<T> extends AbstractOperator<T> {
     }
 
     @Override
-    public T evaluate() {
+    public T evaluate(Object data) {
         return value;
     }
 

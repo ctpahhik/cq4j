@@ -24,7 +24,7 @@ public class ArithmeticOperator extends AbstractOperator {
     }
 
     @Override
-    public Object evaluate() {
+    public Object evaluate(Object data) {
         return null; //TODO: implement
     }
 

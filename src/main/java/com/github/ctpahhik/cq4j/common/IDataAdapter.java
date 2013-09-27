@@ -5,11 +5,11 @@ package com.github.ctpahhik.cq4j.common;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public interface IDataProvider {
+public interface IDataAdapter {
 
-    public Object getByName(String fieldName);
+    public Object getByName(String fieldName, Object data);
 
-    public Object getById(int fieldId);
+    public Object getById(int fieldId, Object data);
 
     public int getIdByName(String fieldName);
 }

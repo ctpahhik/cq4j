@@ -22,15 +22,15 @@ public class InOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
-    public Boolean evaluate() {
-        Object value = valueOp.evaluate();
+    public Boolean evaluate(Object data) {
+        Object value = valueOp.evaluate(data);
         if (value == null) {
             return null;
         }
         boolean hasNull = false;
         Object element;
         for (IOperator operation : listOp) {
-            element = operation.evaluate();
+            element = operation.evaluate(data);
             if (element == null) {
                 hasNull = true;
             } else if (value.equals(element)) {

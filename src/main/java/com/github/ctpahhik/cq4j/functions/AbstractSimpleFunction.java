@@ -15,19 +15,7 @@ public abstract class AbstractSimpleFunction<T> extends AbstractOperator<T> impl
 
     protected List<IOperator> parameters;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public ISimpleFunction create(List<IOperator> parameters) {
-        try {
-            AbstractSimpleFunction<T> function = (AbstractSimpleFunction<T>) this.clone();
-            function.setParameters(parameters);
-            return function;
-        } catch (CloneNotSupportedException e) {
-            throw new IllegalArgumentException("Function must be cloneable");
-        }
-    }
-
-    private void setParameters(List<IOperator> parameters) {
+    void setParameters(List<IOperator> parameters) {
         this.parameters = parameters;
     }
 

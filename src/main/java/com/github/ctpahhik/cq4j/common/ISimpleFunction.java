@@ -10,6 +10,4 @@ import java.util.List;
 public interface ISimpleFunction<T> extends IOperator<T> {
 
     public String getName();
-
-    public ISimpleFunction create(List<IOperator> parameters);
 }

@@ -21,13 +21,13 @@ public class BetweenOperator extends AbstractOperator<Boolean> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Boolean evaluate() {
-        Comparable value = valueOp.evaluate();
+    public Boolean evaluate(Object data) {
+        Comparable value = valueOp.evaluate(data);
         if (value == null) {
             return null;
         }
-        Comparable lower = lowerOp.evaluate();
-        Comparable upper = upperOp.evaluate();
+        Comparable lower = lowerOp.evaluate(data);
+        Comparable upper = upperOp.evaluate(data);
         Boolean result = null;
         if (lower != null) {
             if (value.compareTo(lower) >= 0) {

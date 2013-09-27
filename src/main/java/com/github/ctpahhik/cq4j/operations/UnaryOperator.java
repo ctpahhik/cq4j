@@ -22,7 +22,7 @@ public class UnaryOperator extends AbstractOperator {
     }
 
     @Override
-    public Object evaluate() {
+    public Object evaluate(Object data) {
         return null;  //TODO: Implement
     }
 

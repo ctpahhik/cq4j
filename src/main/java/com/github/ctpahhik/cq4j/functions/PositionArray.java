@@ -16,17 +16,22 @@ public class PositionArray extends AbstractInFunction<Integer> {
     }
 
     @Override
-    public Integer evaluate() {
-        Object value = valueOp.evaluate();
+    public Integer evaluate(Object data) {
+        Object value = valueOp.evaluate(data);
         if (value == null) {
             return null;
         }
-        Object inValue = inValueOp.evaluate();
+        Object inValue = inValueOp.evaluate(data);
         if (inValue == null) {
             return null;
         }
-        int from  = (fromOp == null) ? 0 : fromOp.evaluate();
+        int from  = fromOp.evaluate(data);
         return positionArray(value, inValue, from);
+    }
+
+    @Override
+    protected Integer getDefaultFrom() {
+        return 0;
     }
 
     private Integer positionArray(Object first, Object second, int from) {

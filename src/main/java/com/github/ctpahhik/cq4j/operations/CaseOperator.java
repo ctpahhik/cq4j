@@ -26,7 +26,7 @@ public class CaseOperator extends AbstractOperator {
     }
 
     @Override
-    public Object evaluate() {
+    public Object evaluate(Object data) {
         return null; //TODO: implement
     }
 

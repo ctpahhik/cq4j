@@ -16,8 +16,8 @@ public class IsNullOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
-    public Boolean evaluate() {
-        return valueOp.evaluate() == null;
+    public Boolean evaluate(Object data) {
+        return valueOp.evaluate(data) == null;
     }
 
     @Override

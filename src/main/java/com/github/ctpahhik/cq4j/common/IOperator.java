@@ -7,7 +7,7 @@ package com.github.ctpahhik.cq4j.common;
  */
 public interface IOperator<T> {
 
-    public T evaluate();
+    public T evaluate(Object data); //TODO: Make 'data' -> generic type
 
     public boolean isPureFunction();
 }

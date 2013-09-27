@@ -16,8 +16,8 @@ public class NotOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
-    public Boolean evaluate() {
-        Boolean value = valueOp.evaluate();
+    public Boolean evaluate(Object data) {
+        Boolean value = valueOp.evaluate(data);
         return value == null ? null : !value ;
     }
 
