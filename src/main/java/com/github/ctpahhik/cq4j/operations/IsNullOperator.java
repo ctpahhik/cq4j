@@ -1,17 +1,17 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  * TODO: JavaDoc
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class IsNullOperation extends AbstractOperation<Boolean> {
+public class IsNullOperator extends AbstractOperator<Boolean> {
 
-    private IOperation valueOp;
+    private IOperator valueOp;
 
-    public IsNullOperation(IOperation valueOp) {
+    public IsNullOperator(IOperator valueOp) {
         this.valueOp = valueOp;
     }
 

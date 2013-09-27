@@ -1,23 +1,23 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  * TODO: JavaDoc
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class ArithmeticOperation extends AbstractOperation {
+public class ArithmeticOperator extends AbstractOperator {
 
     public enum Type {
         PLUS, MINUS, MULT, DIV
     }
 
-    private IOperation leftOp;
-    private IOperation rightOp;
+    private IOperator leftOp;
+    private IOperator rightOp;
     private Type type;
 
-    public ArithmeticOperation(IOperation leftOp, IOperation rightOp, Type type) {
+    public ArithmeticOperator(IOperator leftOp, IOperator rightOp, Type type) {
         this.leftOp = leftOp;
         this.rightOp = rightOp;
         this.type = type;

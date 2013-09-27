@@ -5,11 +5,11 @@ package com.github.ctpahhik.cq4j.operations;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class ConstantOperation<T> extends AbstractOperation<T> {
+public class ConstantOperator<T> extends AbstractOperator<T> {
 
     private T value;
 
-    public ConstantOperation(T value) {
+    public ConstantOperator(T value) {
         this.value = value;
     }
 

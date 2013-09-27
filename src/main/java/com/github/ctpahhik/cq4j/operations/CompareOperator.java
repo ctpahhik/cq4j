@@ -1,23 +1,23 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  * TODO: JavaDoc
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class CompareOperation extends AbstractOperation<Boolean>  {
+public class CompareOperator extends AbstractOperator<Boolean> {
 
     public enum Type {
         EQ, NOT_EQ, LT, LT_EQ, GT, GT_EQ
     }
 
-    private IOperation<Comparable> leftOp;
-    private IOperation<Comparable> rightOp;
+    private IOperator<Comparable> leftOp;
+    private IOperator<Comparable> rightOp;
     private Type type;
 
-    public CompareOperation(IOperation<Comparable> leftOp, IOperation<Comparable> rightOp, Type type) {
+    public CompareOperator(IOperator<Comparable> leftOp, IOperator<Comparable> rightOp, Type type) {
         this.leftOp = leftOp;
         this.rightOp = rightOp;
         this.type = type;

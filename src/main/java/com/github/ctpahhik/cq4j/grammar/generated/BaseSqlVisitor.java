@@ -12,13 +12,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#OrOperand}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOrOperand(@NotNull BaseSqlParser.OrOperandContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#whereClause}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -26,25 +19,11 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitWhereClause(@NotNull BaseSqlParser.WhereClauseContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#SearchedCaseFunction}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSearchedCaseFunction(@NotNull BaseSqlParser.SearchedCaseFunctionContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#Field}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitField(@NotNull BaseSqlParser.FieldContext ctx);
-
-	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#CaseFunction}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCaseFunction(@NotNull BaseSqlParser.CaseFunctionContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#query}.
@@ -59,6 +38,13 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNegatablePredicate(@NotNull BaseSqlParser.NegatablePredicateContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#AndOperator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#NotCondition}.
@@ -82,13 +68,6 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSkipCondition(@NotNull BaseSqlParser.SkipConditionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#UnaryOperand}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitUnaryOperand(@NotNull BaseSqlParser.UnaryOperandContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#BetweenPredicate}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -103,18 +82,25 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSkipPredicate(@NotNull BaseSqlParser.SkipPredicateContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#ArithmeticOperand}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArithmeticOperand(@NotNull BaseSqlParser.ArithmeticOperandContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#Float}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitFloat(@NotNull BaseSqlParser.FloatContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#CaseOperator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#SearchedCaseOperator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#ComparePredicate}.
@@ -180,11 +166,11 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSimpleFunction(@NotNull BaseSqlParser.SimpleFunctionContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#AndOperand}.
+	 * Visit a parse tree produced by {@link BaseSqlParser#ArithmeticOperator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAndOperand(@NotNull BaseSqlParser.AndOperandContext ctx);
+	T visitArithmeticOperator(@NotNull BaseSqlParser.ArithmeticOperatorContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#fromExpression}.
@@ -194,11 +180,25 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#OrOperator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#String}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitString(@NotNull BaseSqlParser.StringContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#UnaryOperator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryOperator(@NotNull BaseSqlParser.UnaryOperatorContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#selectExpression}.

@@ -7,9 +7,9 @@ import java.util.List;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public interface ISimpleFunction<T> extends IOperation<T> {
+public interface ISimpleFunction<T> extends IOperator<T> {
 
     public String getName();
 
-    public ISimpleFunction create(List<IOperation> parameters);
+    public ISimpleFunction create(List<IOperator> parameters);
 }

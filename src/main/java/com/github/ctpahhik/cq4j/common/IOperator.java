@@ -5,7 +5,7 @@ package com.github.ctpahhik.cq4j.common;
  *
  * @author  Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public interface IOperation<T> {
+public interface IOperator<T> {
 
     public T evaluate();
 

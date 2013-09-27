@@ -1,23 +1,23 @@
 package com.github.ctpahhik.cq4j.functions;
 
 import com.github.ctpahhik.cq4j.common.IInFunction;
-import com.github.ctpahhik.cq4j.common.IOperation;
-import com.github.ctpahhik.cq4j.operations.AbstractOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
+import com.github.ctpahhik.cq4j.operations.AbstractOperator;
 
 /**
  * TODO: JavaDoc
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public abstract class AbstractInFunction<T> extends AbstractOperation<T> implements IInFunction<T>, Cloneable {
+public abstract class AbstractInFunction<T> extends AbstractOperator<T> implements IInFunction<T>, Cloneable {
 
-    protected IOperation valueOp;
-    protected IOperation inValueOp;
-    protected IOperation<Integer> fromOp;
+    protected IOperator valueOp;
+    protected IOperator inValueOp;
+    protected IOperator<Integer> fromOp;
 
     @Override
     @SuppressWarnings("unchecked")
-    public IInFunction create(IOperation valueOp, IOperation inValueOp, IOperation<Integer> fromOp) {
+    public IInFunction create(IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromOp) {
         try {
             AbstractInFunction<T> function = (AbstractInFunction<T>) this.clone();
             function.setParameters(valueOp, inValueOp, fromOp);
@@ -27,7 +27,7 @@ public abstract class AbstractInFunction<T> extends AbstractOperation<T> impleme
         }
     }
 
-    private void setParameters(IOperation valueOp, IOperation inValueOp, IOperation<Integer> fromOp) {
+    private void setParameters(IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromOp) {
         this.valueOp = valueOp;
         this.inValueOp = inValueOp;
         this.fromOp = fromOp;

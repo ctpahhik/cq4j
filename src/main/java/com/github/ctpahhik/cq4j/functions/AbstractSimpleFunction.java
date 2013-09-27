@@ -1,8 +1,8 @@
 package com.github.ctpahhik.cq4j.functions;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 import com.github.ctpahhik.cq4j.common.ISimpleFunction;
-import com.github.ctpahhik.cq4j.operations.AbstractOperation;
+import com.github.ctpahhik.cq4j.operations.AbstractOperator;
 
 import java.util.List;
 
@@ -11,13 +11,13 @@ import java.util.List;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public abstract class AbstractSimpleFunction<T> extends AbstractOperation<T> implements ISimpleFunction<T>, Cloneable {
+public abstract class AbstractSimpleFunction<T> extends AbstractOperator<T> implements ISimpleFunction<T>, Cloneable {
 
-    protected List<IOperation> parameters;
+    protected List<IOperator> parameters;
 
     @Override
     @SuppressWarnings("unchecked")
-    public ISimpleFunction create(List<IOperation> parameters) {
+    public ISimpleFunction create(List<IOperator> parameters) {
         try {
             AbstractSimpleFunction<T> function = (AbstractSimpleFunction<T>) this.clone();
             function.setParameters(parameters);
@@ -27,7 +27,7 @@ public abstract class AbstractSimpleFunction<T> extends AbstractOperation<T> imp
         }
     }
 
-    private void setParameters(List<IOperation> parameters) {
+    private void setParameters(List<IOperator> parameters) {
         this.parameters = parameters;
     }
 

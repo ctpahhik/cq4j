@@ -9,17 +9,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface BaseSqlListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link BaseSqlParser#OrOperand}.
-	 * @param ctx the parse tree
-	 */
-	void enterOrOperand(@NotNull BaseSqlParser.OrOperandContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BaseSqlParser#OrOperand}.
-	 * @param ctx the parse tree
-	 */
-	void exitOrOperand(@NotNull BaseSqlParser.OrOperandContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#whereClause}.
 	 * @param ctx the parse tree
 	 */
@@ -31,17 +20,6 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitWhereClause(@NotNull BaseSqlParser.WhereClauseContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link BaseSqlParser#SearchedCaseFunction}.
-	 * @param ctx the parse tree
-	 */
-	void enterSearchedCaseFunction(@NotNull BaseSqlParser.SearchedCaseFunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BaseSqlParser#SearchedCaseFunction}.
-	 * @param ctx the parse tree
-	 */
-	void exitSearchedCaseFunction(@NotNull BaseSqlParser.SearchedCaseFunctionContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#Field}.
 	 * @param ctx the parse tree
 	 */
@@ -51,17 +29,6 @@ public interface BaseSqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitField(@NotNull BaseSqlParser.FieldContext ctx);
-
-	/**
-	 * Enter a parse tree produced by {@link BaseSqlParser#CaseFunction}.
-	 * @param ctx the parse tree
-	 */
-	void enterCaseFunction(@NotNull BaseSqlParser.CaseFunctionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BaseSqlParser#CaseFunction}.
-	 * @param ctx the parse tree
-	 */
-	void exitCaseFunction(@NotNull BaseSqlParser.CaseFunctionContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#query}.
@@ -84,6 +51,17 @@ public interface BaseSqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitNegatablePredicate(@NotNull BaseSqlParser.NegatablePredicateContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#AndOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#AndOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#NotCondition}.
@@ -119,17 +97,6 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitSkipCondition(@NotNull BaseSqlParser.SkipConditionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link BaseSqlParser#UnaryOperand}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryOperand(@NotNull BaseSqlParser.UnaryOperandContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BaseSqlParser#UnaryOperand}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryOperand(@NotNull BaseSqlParser.UnaryOperandContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#BetweenPredicate}.
 	 * @param ctx the parse tree
 	 */
@@ -152,17 +119,6 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitSkipPredicate(@NotNull BaseSqlParser.SkipPredicateContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link BaseSqlParser#ArithmeticOperand}.
-	 * @param ctx the parse tree
-	 */
-	void enterArithmeticOperand(@NotNull BaseSqlParser.ArithmeticOperandContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BaseSqlParser#ArithmeticOperand}.
-	 * @param ctx the parse tree
-	 */
-	void exitArithmeticOperand(@NotNull BaseSqlParser.ArithmeticOperandContext ctx);
-
-	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#Float}.
 	 * @param ctx the parse tree
 	 */
@@ -172,6 +128,28 @@ public interface BaseSqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFloat(@NotNull BaseSqlParser.FloatContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#CaseOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#CaseOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#SearchedCaseOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#SearchedCaseOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#ComparePredicate}.
@@ -273,15 +251,15 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitSimpleFunction(@NotNull BaseSqlParser.SimpleFunctionContext ctx);
 
 	/**
-	 * Enter a parse tree produced by {@link BaseSqlParser#AndOperand}.
+	 * Enter a parse tree produced by {@link BaseSqlParser#ArithmeticOperator}.
 	 * @param ctx the parse tree
 	 */
-	void enterAndOperand(@NotNull BaseSqlParser.AndOperandContext ctx);
+	void enterArithmeticOperator(@NotNull BaseSqlParser.ArithmeticOperatorContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BaseSqlParser#AndOperand}.
+	 * Exit a parse tree produced by {@link BaseSqlParser#ArithmeticOperator}.
 	 * @param ctx the parse tree
 	 */
-	void exitAndOperand(@NotNull BaseSqlParser.AndOperandContext ctx);
+	void exitArithmeticOperator(@NotNull BaseSqlParser.ArithmeticOperatorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#fromExpression}.
@@ -295,6 +273,17 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#OrOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#OrOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#String}.
 	 * @param ctx the parse tree
 	 */
@@ -304,6 +293,17 @@ public interface BaseSqlListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitString(@NotNull BaseSqlParser.StringContext ctx);
+
+	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#UnaryOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryOperator(@NotNull BaseSqlParser.UnaryOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#UnaryOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryOperator(@NotNull BaseSqlParser.UnaryOperatorContext ctx);
 
 	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#selectExpression}.

@@ -5,9 +5,9 @@ package com.github.ctpahhik.cq4j.common;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public interface IInFunction<T> extends IOperation<T> {
+public interface IInFunction<T> extends IOperator<T> {
 
     public String getName();
 
-    public IInFunction create(IOperation valueOp, IOperation inValueOp, IOperation<Integer> fromValueOp);
+    public IInFunction create(IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromValueOp);
 }

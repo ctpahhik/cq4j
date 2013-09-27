@@ -1,17 +1,17 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  * TODO: JavaDoc
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class NotOperation extends AbstractOperation<Boolean> {
+public class NotOperator extends AbstractOperator<Boolean> {
 
-    private IOperation<Boolean> valueOp;
+    private IOperator<Boolean> valueOp;
 
-    public NotOperation(IOperation<Boolean> valueOp) {
+    public NotOperator(IOperator<Boolean> valueOp) {
         this.valueOp = valueOp;
     }
 

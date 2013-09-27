@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public abstract class AbstractOperation<T> implements IOperation<T> {
+public abstract class AbstractOperator<T> implements IOperator<T> {
 
     @Override
     public boolean isPureFunction() {

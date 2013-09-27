@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import java.util.List;
  *
  * author: Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class InOperation extends AbstractOperation<Boolean> {
+public class InOperator extends AbstractOperator<Boolean> {
 
-    private IOperation valueOp;
-    private List<IOperation> listOp;
+    private IOperator valueOp;
+    private List<IOperator> listOp;
 
-    public InOperation(IOperation valueOp, List<IOperation> listOp) {
+    public InOperator(IOperator valueOp, List<IOperator> listOp) {
         this.valueOp = valueOp;
         this.listOp = listOp;
     }
@@ -29,7 +29,7 @@ public class InOperation extends AbstractOperation<Boolean> {
         }
         boolean hasNull = false;
         Object element;
-        for (IOperation operation : listOp) {
+        for (IOperator operation : listOp) {
             element = operation.evaluate();
             if (element == null) {
                 hasNull = true;

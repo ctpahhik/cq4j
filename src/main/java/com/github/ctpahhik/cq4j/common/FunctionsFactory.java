@@ -45,11 +45,11 @@ public class FunctionsFactory {
         inFunctionPrototypes.put(name.toLowerCase(), function);
     }
 
-    public ISimpleFunction createSimpleFunction(String name, List<IOperation> parameters) {
+    public ISimpleFunction createSimpleFunction(String name, List<IOperator> parameters) {
         return simpleFunctionPrototypes.get(name.toLowerCase()).create(parameters);
     }
 
-    public IInFunction createInFunction(String name, IOperation valueOp, IOperation inValueOp, IOperation<Integer> fromOp) {
+    public IInFunction createInFunction(String name, IOperator valueOp, IOperator inValueOp, IOperator<Integer> fromOp) {
         return inFunctionPrototypes.get(name.toLowerCase()).create(valueOp, inValueOp, fromOp);
     }
 }

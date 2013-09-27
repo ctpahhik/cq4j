@@ -1,27 +1,17 @@
 // Generated from BaseSql.g4 by ANTLR 4.1
-package com.github.ctpahhik.cq4j.grammar;
-import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
-import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
+package com.github.ctpahhik.cq4j.grammar.generated;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
- * This class provides an empty implementation of {@link com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor},
+ * This class provides an empty implementation of {@link BaseSqlVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
  * of the available methods.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public class BaseSqlQueryCompilationVisitor<T> extends AbstractParseTreeVisitor<T> implements BaseSqlVisitor<T> {
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.
-	 */
-	@Override public T visitOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx) { return visitChildren(ctx); }
-
+public class BaseSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements BaseSqlVisitor<T> {
 	/**
 	 * {@inheritDoc}
 	 * <p/>
@@ -53,6 +43,14 @@ public class BaseSqlQueryCompilationVisitor<T> extends AbstractParseTreeVisitor<
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitNegatablePredicate(@NotNull BaseSqlParser.NegatablePredicateContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
+	@Override public T visitAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -204,7 +202,7 @@ public class BaseSqlQueryCompilationVisitor<T> extends AbstractParseTreeVisitor<
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx) { return visitChildren(ctx); }
+	@Override public T visitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -212,7 +210,7 @@ public class BaseSqlQueryCompilationVisitor<T> extends AbstractParseTreeVisitor<
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx) { return visitChildren(ctx); }
+	@Override public T visitOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

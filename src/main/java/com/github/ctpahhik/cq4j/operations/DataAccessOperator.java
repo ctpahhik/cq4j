@@ -7,13 +7,13 @@ import com.github.ctpahhik.cq4j.common.IDataProvider;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class DataAccessOperation<T> extends AbstractOperation<T> {
+public class DataAccessOperator<T> extends AbstractOperator<T> {
 
     private IDataProvider dataProvider;
     private String fieldName;
     private int fieldId;
 
-    public DataAccessOperation(IDataProvider dataProvider, String fieldName) {
+    public DataAccessOperator(IDataProvider dataProvider, String fieldName) {
         this.dataProvider = dataProvider;
         this.fieldName = fieldName;
         this.fieldId = dataProvider.getIdByName(fieldName);

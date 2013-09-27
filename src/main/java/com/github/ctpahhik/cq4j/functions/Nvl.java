@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.functions;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  * TODO: JavaDoc
@@ -16,7 +16,7 @@ public class Nvl extends AbstractSimpleFunction<Object> {
 
     @Override
     public Object evaluate() {
-        for (IOperation op : parameters) {
+        for (IOperator op : parameters) {
             Object value = op.evaluate();
             if (value != null) {
                 return value;

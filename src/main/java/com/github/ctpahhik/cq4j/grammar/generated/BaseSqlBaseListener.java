@@ -17,19 +17,6 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterOrOperand(@NotNull BaseSqlParser.OrOperandContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitOrOperand(@NotNull BaseSqlParser.OrOperandContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterWhereClause(@NotNull BaseSqlParser.WhereClauseContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -43,19 +30,6 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterSearchedCaseFunction(@NotNull BaseSqlParser.SearchedCaseFunctionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitSearchedCaseFunction(@NotNull BaseSqlParser.SearchedCaseFunctionContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterField(@NotNull BaseSqlParser.FieldContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -63,19 +37,6 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitField(@NotNull BaseSqlParser.FieldContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterCaseFunction(@NotNull BaseSqlParser.CaseFunctionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitCaseFunction(@NotNull BaseSqlParser.CaseFunctionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -102,6 +63,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitNegatablePredicate(@NotNull BaseSqlParser.NegatablePredicateContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -147,19 +121,6 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterUnaryOperand(@NotNull BaseSqlParser.UnaryOperandContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitUnaryOperand(@NotNull BaseSqlParser.UnaryOperandContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterBetweenPredicate(@NotNull BaseSqlParser.BetweenPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -186,19 +147,6 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterArithmeticOperand(@NotNull BaseSqlParser.ArithmeticOperandContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitArithmeticOperand(@NotNull BaseSqlParser.ArithmeticOperandContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterFloat(@NotNull BaseSqlParser.FloatContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -206,6 +154,32 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitFloat(@NotNull BaseSqlParser.FloatContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -329,13 +303,13 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterAndOperand(@NotNull BaseSqlParser.AndOperandContext ctx) { }
+	@Override public void enterArithmeticOperator(@NotNull BaseSqlParser.ArithmeticOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitAndOperand(@NotNull BaseSqlParser.AndOperandContext ctx) { }
+	@Override public void exitArithmeticOperator(@NotNull BaseSqlParser.ArithmeticOperatorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -355,6 +329,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterString(@NotNull BaseSqlParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -362,6 +349,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitString(@NotNull BaseSqlParser.StringContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterUnaryOperator(@NotNull BaseSqlParser.UnaryOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitUnaryOperator(@NotNull BaseSqlParser.UnaryOperatorContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

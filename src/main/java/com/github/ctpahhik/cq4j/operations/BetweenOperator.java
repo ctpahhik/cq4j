@@ -1,19 +1,19 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  * TODO: JavaDoc
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class BetweenOperation extends AbstractOperation<Boolean> {
+public class BetweenOperator extends AbstractOperator<Boolean> {
 
-    private IOperation<? extends Comparable> valueOp;
-    private IOperation<? extends Comparable> lowerOp;
-    private IOperation<? extends Comparable> upperOp;
+    private IOperator<? extends Comparable> valueOp;
+    private IOperator<? extends Comparable> lowerOp;
+    private IOperator<? extends Comparable> upperOp;
 
-    public BetweenOperation(IOperation<? extends Comparable> valueOp, IOperation<? extends Comparable> lowerOp, IOperation<? extends Comparable> upperOp) {
+    public BetweenOperator(IOperator<? extends Comparable> valueOp, IOperator<? extends Comparable> lowerOp, IOperator<? extends Comparable> upperOp) {
         this.valueOp = valueOp;
         this.lowerOp = lowerOp;
         this.upperOp = upperOp;

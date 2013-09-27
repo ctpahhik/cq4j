@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.operations;
 
-import com.github.ctpahhik.cq4j.common.IOperation;
+import com.github.ctpahhik.cq4j.common.IOperator;
 
 /**
  *
@@ -8,12 +8,12 @@ import com.github.ctpahhik.cq4j.common.IOperation;
  *
  * author: ctpahhik (mostovliuk@gmail.com)
  */
-public class OrOperation extends AbstractOperation<Boolean> {
+public class OrOperator extends AbstractOperator<Boolean> {
 
-    private IOperation<Boolean> leftOp;
-    private IOperation<Boolean> rightOp;
+    private IOperator<Boolean> leftOp;
+    private IOperator<Boolean> rightOp;
 
-    public OrOperation(IOperation<Boolean> leftOp, IOperation<Boolean> rightOp) {
+    public OrOperator(IOperator<Boolean> leftOp, IOperator<Boolean> rightOp) {
         this.leftOp = leftOp;
         this.rightOp = rightOp;
     }

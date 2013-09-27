@@ -111,8 +111,8 @@ simpleCondition : value=condition EOF;
 condition :
     NOT value=condition #NotCondition
     | L_PAREN condition R_PAREN #SkipCondition
-    | left=condition AND right=condition #AndOperand
-    | left=condition OR right=condition #OrOperand
+    | left=condition AND right=condition #AndOperator
+    | left=condition OR right=condition #OrOperator
     | predicate #SkipCondition
 ;
 
@@ -120,7 +120,7 @@ predicate :
     value=BOOLEAN #Boolean
     | value=expression #SkipPredicate
     | value=expression IS NOT? NULL #IsNullPredicate
-    | left=expression operand=( LT_EQ | LT | GT_EQ | GT | EQ | NOT_EQ ) right=expression #ComparePredicate
+    | left=expression operator=( LT_EQ | LT | GT_EQ | GT | EQ | NOT_EQ ) right=expression #ComparePredicate
     | value=expression NOT? detailedPredicate=subPredicate #NegatablePredicate
     ;
 
@@ -141,17 +141,17 @@ comparison :
 
 expression:
     L_PAREN expression R_PAREN #SkipExpression 
-    | operand = ( PLUS | MINUS ) value=expression #UnaryOperand
-    | left=expression operand=( MULT | DIV ) right=expression #ArithmeticOperand 
-    | left=expression operand=( PLUS | MINUS ) right=expression #ArithmeticOperand 
+    | operator = ( PLUS | MINUS ) value=expression #UnaryOperator
+    | left=expression operator=( MULT | DIV ) right=expression #ArithmeticOperator 
+    | left=expression operator=( PLUS | MINUS ) right=expression #ArithmeticOperator 
+    | CASE valueExpr=expression (WHEN whenExpr+=expression THEN thenExpr+=expression)+ (ELSE elseExpr=expression)? END #CaseOperator
+    | CASE (WHEN whenExpr+=condition THEN thenExpr+=expression)+ (ELSE elseExpr=expression)? END #SearchedCaseOperator
     | function #SkipExpression 
     | primitive #SkipExpression 
     ;
 
 function :
-    CASE valueExpr=expression (WHEN whenExpr+=expression THEN thenExpr+=expression)+ (ELSE elseExpr=expression)? END #CaseFunction
-    | CASE (WHEN whenExpr+=predicate THEN thenExpr+=expression)+ (ELSE elseExpr=expression)? END #SearchedCaseFunction
-    | ID L_PAREN el+=expression (COMA? el+=expression)* R_PAREN #SimpleFunction 
+    ID L_PAREN el+=expression (COMA? el+=expression)* R_PAREN #SimpleFunction 
     | ID L_PAREN value=expression IN inValue=expression ( FROM from=expression)? R_PAREN #InFunction 
     ;
 
