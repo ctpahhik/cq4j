@@ -8,7 +8,7 @@ Inspired by SQLJEP http://sqljep.sourceforge.net/
 Features:
 - [ ] evaluating base SQL expressions on data source (in progress)
 - [ ] supported data sources
-    - [ ] Arrays + Metadata (to do)
+    - [x] Arrays + Metadata (done)
     - [ ] Java Beans using reflection (to do)
     - [ ] Java Beans using dynamic code generation (to do)
     - [ ] ResultSets? (?)
