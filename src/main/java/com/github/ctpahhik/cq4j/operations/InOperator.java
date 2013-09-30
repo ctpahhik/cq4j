@@ -6,10 +6,9 @@ import java.util.List;
 
 /**
  *
- * Boolean AND operation.
- * Violates 3VL Kleene logic for better laziness as it's enough for now.
+ * TODO: JavaDoc
  *
- * author: Denys Mostovliuk (mostovliuk@gmail.com)
+ * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
 public class InOperator extends AbstractOperator<Boolean> {
 

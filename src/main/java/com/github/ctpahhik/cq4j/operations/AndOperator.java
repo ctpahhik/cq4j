@@ -5,9 +5,9 @@ import com.github.ctpahhik.cq4j.common.IOperator;
 /**
  *
  * Boolean AND operation.
- * Violates 3VL Kleene logic for better laziness as it's enough for now.
+ * Violates 3VL Kleene logic for better laziness as it's enough for now. //TODO: fix (make configurable?)
  *
- * author: ctpahhik (mostovliuk@gmail.com)
+ * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
 public class AndOperator extends AbstractOperator<Boolean> {
 

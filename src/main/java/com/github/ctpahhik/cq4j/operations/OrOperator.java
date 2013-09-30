@@ -6,7 +6,7 @@ import com.github.ctpahhik.cq4j.common.IOperator;
  *
  * Boolean OR operation.
  *
- * author: ctpahhik (mostovliuk@gmail.com)
+ * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
 public class OrOperator extends AbstractOperator<Boolean> {
 

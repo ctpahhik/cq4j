@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -15,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  *
  * @author  Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class AtomicRefernceArrayDataProviderFunctionalTest {
+public class AtomicReferenceArrayDataProviderFunctionalTest {
     @Test
     public void testVariableTrueCondition() throws Exception {
         String qry = "param = 3";
@@ -59,7 +60,22 @@ public class AtomicRefernceArrayDataProviderFunctionalTest {
         Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 3);
+        assertTrue(expr.isTrue(values));
+    }
+
+    @Test
+    public void testSearchedCaseCondition() throws Exception {
+        String qry = "case param when 3 then true when 5 then false end";
+        Map<String,Integer> mapping = new HashMap<String, Integer>();
+        mapping.put("param", 0);
+        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
+        values.set(0, 3);
+        assertTrue(expr.isTrue(values));
+        values.set(0, 5);
         assertFalse(expr.isTrue(values));
+        values.set(0, 7);
+        assertNull(expr.isTrue(values));
     }
 
     @Test
@@ -70,6 +86,6 @@ public class AtomicRefernceArrayDataProviderFunctionalTest {
         Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 5);
-        assertFalse(expr.isTrue(values));
+        assertTrue(expr.isTrue(values));
     }
 }

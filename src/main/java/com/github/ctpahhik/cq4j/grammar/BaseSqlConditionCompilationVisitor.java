@@ -237,7 +237,9 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         for (BaseSqlParser.ExpressionContext context : ctx.thenExpr) {
             thenOps.add(context.accept(this));
         }
-        return new SearchedCaseOperator(whenOps, thenOps, ctx.elseExpr.accept(this));
+        IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);
+
+        return new SearchedCaseOperator(whenOps, thenOps, elseOp);
     }
 
     @Override
@@ -250,7 +252,9 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         for (BaseSqlParser.ExpressionContext context : ctx.thenExpr) {
             thenOps.add(context.accept(this));
         }
-        return new CaseOperator(ctx.valueExpr.accept(this), whenOps, thenOps, ctx.elseExpr.accept(this));
+        IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);
+
+        return new CaseOperator(ctx.valueExpr.accept(this), whenOps, thenOps, elseOp);
     }
 
     @Override

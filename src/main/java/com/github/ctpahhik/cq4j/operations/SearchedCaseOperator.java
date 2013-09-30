@@ -6,10 +6,9 @@ import java.util.List;
 
 /**
  *
- * Boolean AND operation.
- * Violates 3VL Kleene logic for better laziness as it's enough for now.
+ * TODO: JavaDoc
  *
- * author: ctpahhik (mostovliuk@gmail.com)
+ * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
 public class SearchedCaseOperator extends AbstractOperator {
 
@@ -25,7 +24,15 @@ public class SearchedCaseOperator extends AbstractOperator {
 
     @Override
     public Object evaluate(Object data) {
-        return null; //TODO: implement
+        for (int i = 0; i<whenExprOps.size(); i++) {
+            if (whenExprOps.get(i).evaluate(data)) {
+                return thenExprOps.get(i).evaluate(data);
+            }
+        }
+        if (elseOp != null) {
+            return elseOp.evaluate(data);
+        }
+        return null;
     }
 
     @Override

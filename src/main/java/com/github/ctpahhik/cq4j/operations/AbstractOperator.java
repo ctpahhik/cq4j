@@ -3,6 +3,7 @@ package com.github.ctpahhik.cq4j.operations;
 import com.github.ctpahhik.cq4j.common.IOperator;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * TODO: JavaDoc
@@ -13,8 +14,15 @@ public abstract class AbstractOperator<T> implements IOperator<T> {
 
     @Override
     public boolean isPureFunction() {
+        for (IOperator operator : getParameters()) {
+            if (!operator.isPureFunction()) {
+                return false;
+            }
+        }
         return true;
     }
+
+    public List<IOperator> getParameters() { return null; } //TODO: Make abstract and implement in children;
 
     public static long getLong(Object param) {
         if (param instanceof BigDecimal) {
@@ -34,5 +42,22 @@ public abstract class AbstractOperator<T> implements IOperator<T> {
             }
         }
         throw new IllegalArgumentException("Not Long: "+(param != null ? param.getClass() : "null"));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Integer cmp(Object first, Object second) {
+        if (first == null) {
+            return null;
+        }
+        if (second == null) {
+            return null;
+        }
+        if (first.equals(second)) {
+            return 0;
+        }
+        if (first instanceof Comparable) {
+            return ((Comparable) first).compareTo(second);
+        }
+        return null;
     }
 }

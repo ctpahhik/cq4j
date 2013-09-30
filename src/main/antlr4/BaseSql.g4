@@ -120,12 +120,12 @@ predicate :
     value=expression #SkipPredicate
     | value=expression IS NOT? NULL #IsNullPredicate
     | left=expression operator=( LT_EQ | LT | GT_EQ | GT | EQ | NOT_EQ ) right=expression #ComparePredicate
-    | value=expression NOT? detailedPredicate=subPredicate #NegatablePredicate
+    | value=condition NOT? detailedPredicate=subPredicate #NegatablePredicate
     ;
 
 subPredicate:
     BETWEEN lower=expression AND upper=expression #BetweenPredicate
-    | IN L_PAREN el+=expression (COMA el+=expression)* R_PAREN #InPredicate
+    | IN L_PAREN el+=condition (COMA el+=condition)* R_PAREN #InPredicate
       //LIKE etc.
     ;
 
@@ -139,19 +139,19 @@ comparison :
     ;
 
 expression:
-    L_PAREN expression R_PAREN #SkipExpression 
-    | operator = ( PLUS | MINUS ) value=expression #UnaryOperator
+    L_PAREN condition R_PAREN #SkipExpression 
+    | operator = ( PLUS | MINUS ) value=condition #UnaryOperator
     | left=expression operator=( MULT | DIV ) right=expression #ArithmeticOperator 
     | left=expression operator=( PLUS | MINUS ) right=expression #ArithmeticOperator 
-    | CASE valueExpr=expression (WHEN whenExpr+=expression THEN thenExpr+=expression)+ (ELSE elseExpr=expression)? END #CaseOperator
-    | CASE (WHEN whenExpr+=condition THEN thenExpr+=expression)+ (ELSE elseExpr=expression)? END #SearchedCaseOperator
+    | CASE valueExpr=condition (WHEN whenExpr+=condition THEN thenExpr+=condition)+ (ELSE elseExpr=condition)? END #CaseOperator
+    | CASE (WHEN whenExpr+=condition THEN thenExpr+=condition)+ (ELSE elseExpr=condition)? END #SearchedCaseOperator
     | function #SkipExpression 
     | primitive #SkipExpression 
     ;
 
 function :
-    ID L_PAREN el+=expression (COMA? el+=expression)* R_PAREN #SimpleFunction 
-    | ID L_PAREN value=expression IN inValue=expression ( FROM from=expression)? R_PAREN #InFunction 
+    ID L_PAREN el+=condition (COMA? el+=condition)* R_PAREN #SimpleFunction 
+    | ID L_PAREN value=condition IN inValue=condition ( FROM from=condition)? R_PAREN #InFunction 
     ;
 
 primitive :
