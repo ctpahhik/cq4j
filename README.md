@@ -8,19 +8,19 @@ Inspired by SQLJEP http://sqljep.sourceforge.net/
 Features:
 - [ ] evaluating base SQL expressions on data source (in progress)
 - [ ] supported data sources
-    - [x] Arrays + Metadata (done)
-    - [ ] Java Beans using reflection (to do)
-    - [ ] Java Beans using dynamic code generation (to do)
+    - [x] Arrays + Metadata
+    - [x] Java Beans using reflection
+    - [x] Java Beans using dynamic code generation
     - [ ] ResultSets? (?)
 - [ ] filtering queries on Collections, result as:
-    - [ ] new Collection (to do)
-    - [ ] Iterator (lazy) (to do)
-    - [ ] ResultSet (lazy) (to do)
+    - [ ] new Collection
+    - [ ] Iterator (lazy)
+    - [ ] ResultSet (lazy)
 - [ ] support ordering
-- [ ] support queries with joins (to do)
-- [ ] indexed Collections (to do)
+- [ ] support queries with joins
+- [ ] indexed Collections
 - [ ] support sub-queries (?)
 - [ ] support partial/calculated result fields (?)
-- [ ] support 'group by' and aggregation operations (to do)
+- [ ] support 'group by' and aggregation operations
 
 
