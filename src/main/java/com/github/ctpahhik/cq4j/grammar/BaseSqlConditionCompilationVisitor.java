@@ -6,6 +6,7 @@ import com.github.ctpahhik.cq4j.common.IOperator;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
 import com.github.ctpahhik.cq4j.operations.*;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -96,7 +97,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     public IOperator visitInPredicate(@NotNull BaseSqlParser.InPredicateContext ctx) {
         IOperator operationValue = ((BaseSqlParser.NegatablePredicateContext)ctx.getParent()).value.accept(this);
         List<IOperator> listOp = new ArrayList<IOperator>(ctx.el.size());
-        for (BaseSqlParser.ExpressionContext context : ctx.el) {
+        for (ParserRuleContext context : ctx.el) {
             listOp.add(context.accept(this));
         }
         return new InOperator(operationValue, listOp);
@@ -137,7 +138,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     public IOperator visitSimpleFunction(@NotNull BaseSqlParser.SimpleFunctionContext ctx) {
         String name = ctx.ID().getText();
         List<IOperator> listOp = new ArrayList<IOperator>(ctx.el.size());
-        for (BaseSqlParser.ExpressionContext context : ctx.el) {
+        for (ParserRuleContext context : ctx.el) {
             listOp.add(context.accept(this));
         }
         return factory.createSimpleFunction(name, listOp);
@@ -234,7 +235,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
             whenOps.add(context.accept(this));
         }
         List<IOperator> thenOps = new ArrayList<IOperator>(ctx.thenExpr.size());
-        for (BaseSqlParser.ExpressionContext context : ctx.thenExpr) {
+        for (ParserRuleContext context : ctx.thenExpr) {
             thenOps.add(context.accept(this));
         }
         IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);
@@ -245,11 +246,11 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     @Override
     public IOperator visitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) {
         List<IOperator> whenOps = new ArrayList<IOperator>(ctx.whenExpr.size());
-        for (BaseSqlParser.ExpressionContext context : ctx.whenExpr) {
+        for (ParserRuleContext context : ctx.whenExpr) {
             whenOps.add(context.accept(this));
         }
         List<IOperator> thenOps = new ArrayList<IOperator>(ctx.thenExpr.size());
-        for (BaseSqlParser.ExpressionContext context : ctx.thenExpr) {
+        for (ParserRuleContext context : ctx.thenExpr) {
             thenOps.add(context.accept(this));
         }
         IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);

@@ -2,11 +2,14 @@ package com.github.ctpahhik.cq4j.data;
 
 import com.github.ctpahhik.cq4j.common.IDataAdapter;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * TODO: JavaDoc
@@ -15,11 +18,33 @@ import java.util.Map;
  */
 public class BeanReflectionDataAdapter<T> implements IDataAdapter {
 
+    private final static Map<Class, CachedDataHolder<Method[]>> cache = new WeakHashMap<Class, CachedDataHolder<Method[]>>();
     private final Method[] methods;
-    private final Map<String, Integer> namesCache = new HashMap<String, Integer>();
+    private final Map<String, Integer> names;
 
     public BeanReflectionDataAdapter(Class<T> clazz) {
-        this.methods = clazz.getMethods();
+        try {
+            CachedDataHolder<Method[]> holder = cache.get(clazz);
+            if (holder != null) {
+                methods = holder.accessor;
+                names = holder.names;
+                return;
+            }
+
+            BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+            methods = new Method[propertyDescriptors.length];
+            names = new HashMap<String, Integer>();
+            int id = 0;
+            for (PropertyDescriptor descriptor : propertyDescriptors) {
+                methods[id] = descriptor.getReadMethod();
+                names.put(descriptor.getName().toLowerCase(), id);
+                id++;
+            }
+            cache.put(clazz, new CachedDataHolder<Method[]>(methods, names));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Can't introspect bean: " + clazz, e);
+        }
     }
 
     @Override
@@ -38,21 +63,10 @@ public class BeanReflectionDataAdapter<T> implements IDataAdapter {
 
     @Override
     public int getIdByName(String fieldName) {
-        Integer id = namesCache.get(fieldName);
+        Integer id = names.get(fieldName.toLowerCase());
         if (id == null) {
-            for (int i = 0; i<methods.length; i++) {
-                String methodName = methods[i].getName();
-                if (methodName.equalsIgnoreCase("get" + fieldName)
-                        || methodName.equalsIgnoreCase("is" + fieldName)
-                        || methodName.equalsIgnoreCase(fieldName)) {
-                    namesCache.put(fieldName, i);
-                    return i;
-                }
-            }
-        } else {
-            return id;
+            throw new IllegalArgumentException("Unknown field '" + fieldName + "'");
         }
-
-        throw new IllegalArgumentException("Unknown field '" + fieldName + "'");
+        return id;
     }
 }

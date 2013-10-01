@@ -120,7 +120,7 @@ predicate :
     value=expression #SkipPredicate
     | value=expression IS NOT? NULL #IsNullPredicate
     | left=expression operator=( LT_EQ | LT | GT_EQ | GT | EQ | NOT_EQ ) right=expression #ComparePredicate
-    | value=condition NOT? detailedPredicate=subPredicate #NegatablePredicate
+    | value=expression NOT? detailedPredicate=subPredicate #NegatablePredicate
     ;
 
 subPredicate:
