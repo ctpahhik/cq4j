@@ -16,6 +16,7 @@ Features:
     - [ ] new Collection
     - [ ] Iterator (lazy)
     - [ ] ResultSet (lazy)
+- [ ] multithreading queries
 - [ ] support ordering
 - [ ] support queries with joins
 - [ ] indexed Collections
