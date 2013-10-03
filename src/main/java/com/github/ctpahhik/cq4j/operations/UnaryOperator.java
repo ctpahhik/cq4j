@@ -23,7 +23,16 @@ public class UnaryOperator extends AbstractOperator {
 
     @Override
     public Object evaluate(Object data) {
-        return null;  //TODO: Implement
+        Object value = valueOp.evaluate(data);
+        if (value == null) {
+            return null;
+        }
+
+        switch (type) {
+            case MINUS: return convertToBigDecimal(value).negate();
+        }
+
+        throw new IllegalArgumentException("Unknown operation: " + type);
     }
 
     @Override

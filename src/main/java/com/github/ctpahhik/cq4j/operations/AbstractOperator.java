@@ -3,6 +3,7 @@ package com.github.ctpahhik.cq4j.operations;
 import com.github.ctpahhik.cq4j.common.IOperator;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -59,5 +60,21 @@ public abstract class AbstractOperator<T> implements IOperator<T> {
             return ((Comparable) first).compareTo(second);
         }
         return null;
+    }
+
+    protected BigDecimal convertToBigDecimal(Object value) {
+        if (value instanceof BigDecimal) {
+            return (BigDecimal) value;
+        } else if (value instanceof BigInteger) {
+            return new BigDecimal((BigInteger) value);
+        } else if (value instanceof Float || value instanceof Double) {
+            return BigDecimal.valueOf(((Number)value).doubleValue());
+        } else if (value instanceof Number) {
+            return BigDecimal.valueOf(((Number)value).longValue());
+        } else if (value instanceof String) {
+            return new BigDecimal((String)value);
+        } else {
+            throw new IllegalArgumentException("Unsupported value type: " + value.getClass().getSimpleName());
+        }
     }
 }
