@@ -66,19 +66,17 @@ public class ReflectionPerformanceTest {
         builder.append("public void setBean(Object value) {this.value = (").append(TestBean.class.getCanonicalName()).append(")value;}\n");
         builder.append("public Object getValue(int id) {\n");
         builder.append("switch (id) {\n");
-        int id = 0;
-        for (Method method : TestBean.class.getMethods()) {
-            if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
-                builder.append("case ").append(id).append(":").append(" return value.").append(method.getName()).append("();\n");
-                id++;
-            }
-        }
+        builder.append("case 0: return value.getA();\n");
+        builder.append("case 1: return value.getB();\n");
+        builder.append("case 2: return value.getC();\n");
+        builder.append("case 3: return value.getD();\n");
         builder.append("}\n");
         builder.append("return null;\n");
         builder.append("}\n");
         builder.append("}\n");
 
         JavaFileObject file = new StringJavaFileObject("TestBean2", builder.toString());
+        System.out.println("builder = " + builder);
 
         Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(file);
         JavaFileManager fileManager = new

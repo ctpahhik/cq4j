@@ -6,6 +6,7 @@ PLUS    : '+' ;
 MINUS   : '-' ;
 MULT    : '*' ;
 DIV     : '/' ;
+MOD     : '%' ;
 AND     : 'and' ;
 OR      : 'or' ;
 AS      : 'as' ;
@@ -141,7 +142,7 @@ comparison :
 expression:
     L_PAREN condition R_PAREN #SkipExpression 
     | operator = ( PLUS | MINUS ) value=condition #UnaryOperator
-    | left=expression operator=( MULT | DIV ) right=expression #ArithmeticOperator 
+    | left=expression operator=( MULT | DIV | MOD ) right=expression #ArithmeticOperator 
     | left=expression operator=( PLUS | MINUS ) right=expression #ArithmeticOperator 
     | CASE valueExpr=condition (WHEN whenExpr+=condition THEN thenExpr+=condition)+ (ELSE elseExpr=condition)? END #CaseOperator
     | CASE (WHEN whenExpr+=condition THEN thenExpr+=condition)+ (ELSE elseExpr=condition)? END #SearchedCaseOperator

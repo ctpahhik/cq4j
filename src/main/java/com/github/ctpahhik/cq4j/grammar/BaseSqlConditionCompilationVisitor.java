@@ -222,6 +222,9 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
             case BaseSqlParser.DIV :
                 type = ArithmeticOperator.Type.DIV;
                 break;
+            case BaseSqlParser.MOD :
+                type = ArithmeticOperator.Type.MOD;
+                break;
         }
 
         return new ArithmeticOperator(ctx.left.accept(this), ctx.right.accept(this), type);
