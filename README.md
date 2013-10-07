@@ -1,7 +1,7 @@
 cq4j
 ====
 
-A framework for executing SQL queries against common Java Collections
+Collection Queries for Java. A framework for executing SQL queries against common Java Collections
 
 Inspired by SQLJEP http://sqljep.sourceforge.net/
 
@@ -16,6 +16,7 @@ Features:
     - [x] new Collection
     - [x] Iterator (lazy)
     - [ ] ResultSet (lazy)
+- [ ] support Maps
 - [ ] multithreading queries
 - [ ] support ordering
 - [ ] support queries with joins
