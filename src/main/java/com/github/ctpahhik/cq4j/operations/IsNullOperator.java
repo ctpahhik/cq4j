@@ -21,6 +21,11 @@ public class IsNullOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
+    public boolean isDeterministic() {
+        return valueOp.isDeterministic();
+    }
+
+    @Override
     public String toString() {
         return "IS_NULL (" + valueOp + ')';
     }

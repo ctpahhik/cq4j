@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class AtomicReferenceArrayDataAdapter implements IDataAdapter {
+public class AtomicReferenceArrayDataAdapter implements IDataAdapter<AtomicReferenceArray<Object>> {
 
     private final Map<String, Integer> fields;
 
@@ -20,13 +20,13 @@ public class AtomicReferenceArrayDataAdapter implements IDataAdapter {
     }
 
     @Override
-    public Object getByName(String fieldName, Object data) {
+    public Object getByName(String fieldName, AtomicReferenceArray<Object> data) {
         return getById(getIdByName(fieldName), data);
     }
 
     @Override
-    public Object getById(int fieldId, Object data) {
-        return ((AtomicReferenceArray) data).get(fieldId);
+    public Object getById(int fieldId, AtomicReferenceArray<Object> data) {
+        return data.get(fieldId);
     }
 
     @Override

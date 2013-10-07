@@ -28,6 +28,14 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         this.factory = factory;
     }
 
+    private <T> IOperator<T> postProcess(IOperator<T> operator) {
+        if (operator.isDeterministic()) {
+            return new ConstantOperator<T>(operator.evaluate(null));
+        } else {
+            return operator;
+        }
+    }
+
     @Override
     public IOperator visitFloat(@NotNull BaseSqlParser.FloatContext ctx) {
         return new ConstantOperator<Number>(Float.parseFloat(ctx.getText())); //TODO: parse Double and BigDecimal
@@ -41,7 +49,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     @Override
     @SuppressWarnings("unchecked")
     public IOperator visitOrOperator(@NotNull BaseSqlParser.OrOperatorContext ctx) {
-        return new OrOperator(ctx.left.accept(this), ctx.right.accept(this));
+        return postProcess(new OrOperator(ctx.left.accept(this), ctx.right.accept(this)));
     }
 
     @Override
@@ -74,7 +82,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
                 break;
         }
 
-        return new CompareOperator(ctx.left.accept(this), ctx.right.accept(this), type);
+        return postProcess(new CompareOperator(ctx.left.accept(this), ctx.right.accept(this), type));
     }
 
     @Override
@@ -82,9 +90,9 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     public IOperator visitNegatablePredicate(@NotNull BaseSqlParser.NegatablePredicateContext ctx) {
         IOperator<Boolean> operation = ctx.detailedPredicate.accept(this);
         if (ctx.NOT() == null) {
-            return operation;
+            return postProcess(operation);
         } else {
-            return new NotOperator(operation);
+            return postProcess(new NotOperator(operation));
         }
     }
 
@@ -100,13 +108,13 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         for (ParserRuleContext context : ctx.el) {
             listOp.add(context.accept(this));
         }
-        return new InOperator(operationValue, listOp);
+        return postProcess(new InOperator(operationValue, listOp));
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public IOperator visitNotCondition(@NotNull BaseSqlParser.NotConditionContext ctx) {
-        return new NotOperator(ctx.value.accept(this));
+        return postProcess(new NotOperator(ctx.value.accept(this)));
     }
 
     @Override
@@ -131,7 +139,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         IOperator value = ctx.value.accept(this);
         IOperator inValue = ctx.inValue.accept(this);
         IOperator<Integer> fromValue = (ctx.from == null ? null : ctx.from.accept(this));
-        return factory.createInFunction(name, value, inValue, fromValue);
+        return postProcess(factory.createInFunction(name, value, inValue, fromValue));
     }
 
     @Override
@@ -141,7 +149,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         for (ParserRuleContext context : ctx.el) {
             listOp.add(context.accept(this));
         }
-        return factory.createSimpleFunction(name, listOp);
+        return postProcess(factory.createSimpleFunction(name, listOp));
     }
 
     @Override
@@ -156,16 +164,16 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
             case BaseSqlParser.PLUS :
                 return operation;
             case BaseSqlParser.MINUS :
-                return new UnaryOperator(operation, UnaryOperator.Type.MINUS);
+                return postProcess(new UnaryOperator(operation, UnaryOperator.Type.MINUS));
             default:
-                return new UnaryOperator(operation, null);
+                return postProcess(new UnaryOperator(operation, null));
         }
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public IOperator visitAndOperator(@NotNull BaseSqlParser.AndOperatorContext ctx) {
-        return new AndOperator(ctx.left.accept(this), ctx.right.accept(this));
+        return postProcess(new AndOperator(ctx.left.accept(this), ctx.right.accept(this)));
     }
 
     @Override
@@ -178,7 +186,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     @SuppressWarnings("unchecked")
     public IOperator visitBetweenPredicate(@NotNull BaseSqlParser.BetweenPredicateContext ctx) {
         IOperator<Comparable> operationValue = ((BaseSqlParser.NegatablePredicateContext)ctx.getParent()).value.accept(this);
-        return new BetweenOperator(operationValue, ctx.lower.accept(this), ctx.upper.accept(this));
+        return postProcess(new BetweenOperator(operationValue, ctx.lower.accept(this), ctx.upper.accept(this)));
     }
 
     @Override
@@ -200,9 +208,9 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
     public IOperator visitIsNullPredicate(@NotNull BaseSqlParser.IsNullPredicateContext ctx) {
         IOperator<Boolean> operation = new IsNullOperator(ctx.value.accept(this));
         if (ctx.NOT() == null) {
-            return operation;
+            return postProcess(operation);
         } else {
-            return new NotOperator(operation);
+            return postProcess(new NotOperator(operation));
         }
     }
 
@@ -227,7 +235,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
                 break;
         }
 
-        return new ArithmeticOperator(ctx.left.accept(this), ctx.right.accept(this), type);
+        return postProcess(new ArithmeticOperator(ctx.left.accept(this), ctx.right.accept(this), type));
     }
 
     @Override
@@ -243,7 +251,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         }
         IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);
 
-        return new SearchedCaseOperator(whenOps, thenOps, elseOp);
+        return postProcess(new SearchedCaseOperator(whenOps, thenOps, elseOp));
     }
 
     @Override
@@ -258,7 +266,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         }
         IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);
 
-        return new CaseOperator(ctx.valueExpr.accept(this), whenOps, thenOps, elseOp);
+        return postProcess(new CaseOperator(ctx.valueExpr.accept(this), whenOps, thenOps, elseOp));
     }
 
     @Override

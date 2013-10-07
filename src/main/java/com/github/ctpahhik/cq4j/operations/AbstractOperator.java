@@ -14,16 +14,7 @@ import java.util.List;
 public abstract class AbstractOperator<T> implements IOperator<T> {
 
     @Override
-    public boolean isPureFunction() {
-        for (IOperator operator : getParameters()) {
-            if (!operator.isPureFunction()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public List<IOperator> getParameters() { return null; } //TODO: Make abstract and implement in children;
+    public abstract boolean isDeterministic();
 
     public static long getLong(Object param) {
         if (param instanceof BigDecimal) {

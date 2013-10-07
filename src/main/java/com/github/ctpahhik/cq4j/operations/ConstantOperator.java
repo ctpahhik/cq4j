@@ -19,6 +19,11 @@ public class ConstantOperator<T> extends AbstractOperator<T> {
     }
 
     @Override
+    public boolean isDeterministic() {
+        return true;
+    }
+
+    @Override
     public String toString() {
         return String.valueOf(value);
     }

@@ -1,6 +1,8 @@
 package com.github.ctpahhik.cq4j;
 
 import com.github.ctpahhik.cq4j.data.AtomicReferenceArrayDataAdapter;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -17,12 +19,23 @@ import static org.junit.Assert.assertTrue;
  * @author  Denys Mostovliuk (mostovliuk@gmail.com)
  */
 public class AtomicReferenceArrayDataProviderFunctionalTest {
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        Query.setDebug(true);
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        Query.setDebug(false);
+    }
+
     @Test
     public void testVariableTrueCondition() throws Exception {
         String qry = "param = 3";
         Map<String,Integer> mapping = new HashMap<String, Integer>();
         mapping.put("param", 0);
-        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        Query expr = new Query(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 3);
         assertTrue(expr.isTrue(values));
@@ -33,7 +46,7 @@ public class AtomicReferenceArrayDataProviderFunctionalTest {
         String qry = "param = 3";
         Map<String,Integer> mapping = new HashMap<String, Integer>();
         mapping.put("param", 0);
-        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        Query expr = new Query(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 5);
         assertFalse(expr.isTrue(values));
@@ -46,7 +59,7 @@ public class AtomicReferenceArrayDataProviderFunctionalTest {
         mapping.put("param", 0);
         mapping.put("param1", 1);
         mapping.put("param2", 2);
-        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        Query expr = new Query(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(3);
         values.set(0, 3);
         assertTrue(expr.isTrue(values));
@@ -57,7 +70,7 @@ public class AtomicReferenceArrayDataProviderFunctionalTest {
         String qry = "case param when 3 then true else false end";
         Map<String,Integer> mapping = new HashMap<String, Integer>();
         mapping.put("param", 0);
-        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        Query expr = new Query(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 3);
         assertTrue(expr.isTrue(values));
@@ -68,7 +81,7 @@ public class AtomicReferenceArrayDataProviderFunctionalTest {
         String qry = "case param when 3 then true when 5 then false end";
         Map<String,Integer> mapping = new HashMap<String, Integer>();
         mapping.put("param", 0);
-        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        Query expr = new Query(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 3);
         assertTrue(expr.isTrue(values));
@@ -80,10 +93,10 @@ public class AtomicReferenceArrayDataProviderFunctionalTest {
 
     @Test
     public void testSimpleCaseTrueCondition() throws Exception {
-        String qry = "case when param = 5 then true else false end";
+        String qry = "case when param = 5 then true when 3 = 5 then true else false end";
         Map<String,Integer> mapping = new HashMap<String, Integer>();
         mapping.put("param", 0);
-        Evaluator expr = new Evaluator(qry, new AtomicReferenceArrayDataAdapter(mapping));
+        Query expr = new Query(qry, new AtomicReferenceArrayDataAdapter(mapping));
         AtomicReferenceArray<Object> values = new AtomicReferenceArray<Object>(1);
         values.set(0, 5);
         assertTrue(expr.isTrue(values));

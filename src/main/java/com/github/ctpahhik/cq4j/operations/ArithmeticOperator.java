@@ -50,7 +50,15 @@ public class ArithmeticOperator extends AbstractOperator {
         throw new IllegalArgumentException("Unknown operation: " + type);
     }
 
+    @Override
+    public boolean isDeterministic() {
+        return leftOp.isDeterministic() && rightOp.isDeterministic();
+    }
 
+    @Override
+    public String toString() {
+        return "(" + leftOp + ") " + type + " (" + rightOp + ')';
+    }
 
     private Object div(BigDecimal left, BigDecimal right) {
         return left.divide(right);
@@ -71,11 +79,4 @@ public class ArithmeticOperator extends AbstractOperator {
     private Object mod(BigDecimal left, BigDecimal right) {
         return left.remainder(right);
     }
-
-    @Override
-    public String toString() {
-        return "(" + leftOp + ") " + type + " (" + rightOp + ')';
-    }
-
-
 }

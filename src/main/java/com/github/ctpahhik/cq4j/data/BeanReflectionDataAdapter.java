@@ -16,7 +16,7 @@ import java.util.WeakHashMap;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class BeanReflectionDataAdapter<T> implements IDataAdapter {
+public class BeanReflectionDataAdapter<T> implements IDataAdapter<T> {
 
     private final static Map<Class, CachedDataHolder<Method[]>> cache = new WeakHashMap<Class, CachedDataHolder<Method[]>>();
     private final Method[] methods;
@@ -48,12 +48,12 @@ public class BeanReflectionDataAdapter<T> implements IDataAdapter {
     }
 
     @Override
-    public Object getByName(String fieldName, Object data) {
+    public Object getByName(String fieldName, T data) {
         return getById(getIdByName(fieldName), data);
     }
 
     @Override
-    public Object getById(int fieldId, Object data) {
+    public Object getById(int fieldId, T data) {
         try {
             return methods[fieldId].invoke(data);
         } catch (Exception e) {

@@ -20,6 +20,17 @@ public abstract class AbstractSimpleFunction<T> extends AbstractOperator<T> impl
     }
 
     @Override
+    public boolean isDeterministic() {
+        for (IOperator operator : parameters) {
+            if (!operator.isDeterministic()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
     public String toString() {
         return getName() + " (" + parameters + ')';
     }

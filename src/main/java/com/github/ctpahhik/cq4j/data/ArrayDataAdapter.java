@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class ArrayDataAdapter implements IDataAdapter {
+public class ArrayDataAdapter implements IDataAdapter<Object[]> {
 
     private final Map<String, Integer> fields;
 
@@ -19,13 +19,13 @@ public class ArrayDataAdapter implements IDataAdapter {
     }
 
     @Override
-    public Object getByName(String fieldName, Object data) {
+    public Object getByName(String fieldName, Object[] data) {
         return getById(getIdByName(fieldName), data);
     }
 
     @Override
-    public Object getById(int fieldId, Object data) {
-        return ((Object[]) data)[fieldId];
+    public Object getById(int fieldId, Object[] data) {
+        return data[fieldId];
     }
 
     @Override

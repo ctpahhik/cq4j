@@ -10,7 +10,7 @@ import com.github.ctpahhik.cq4j.operations.ConstantOperator;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public abstract class AbstractInFunction<T> extends AbstractOperator<T> implements IInFunction<T>, Cloneable {
+public abstract class AbstractInFunction<T> extends AbstractOperator<T> implements IInFunction<T> {
 
     protected IOperator valueOp;
     protected IOperator inValueOp;
@@ -28,8 +28,8 @@ public abstract class AbstractInFunction<T> extends AbstractOperator<T> implemen
     protected abstract Integer getDefaultFrom();
 
     @Override
-    public boolean isPureFunction() {
-        return valueOp.isPureFunction() && inValueOp.isPureFunction() && fromOp.isPureFunction();
+    public boolean isDeterministic() {
+        return valueOp.isDeterministic() && inValueOp.isDeterministic() && fromOp.isDeterministic();
     }
 
     @Override

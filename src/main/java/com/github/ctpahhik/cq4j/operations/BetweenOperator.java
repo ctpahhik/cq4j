@@ -48,6 +48,11 @@ public class BetweenOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
+    public boolean isDeterministic() {
+        return valueOp.isDeterministic() && lowerOp.isDeterministic() && upperOp.isDeterministic();
+    }
+
+    @Override
     public String toString() {
         return "(" + valueOp + ") BETWEEN (" + lowerOp + ") AND (" + upperOp + ")";
     }

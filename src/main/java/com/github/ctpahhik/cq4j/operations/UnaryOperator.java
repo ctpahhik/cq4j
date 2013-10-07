@@ -36,6 +36,11 @@ public class UnaryOperator extends AbstractOperator {
     }
 
     @Override
+    public boolean isDeterministic() {
+        return valueOp.isDeterministic();
+    }
+
+    @Override
     public String toString() {
         return type + " (" + valueOp + ')';
     }

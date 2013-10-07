@@ -15,7 +15,7 @@ import java.util.Map;
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
 @Deprecated //draft
-public class BeanInvokeDynamicDataAdapter<T> implements IDataAdapter {
+public class BeanInvokeDynamicDataAdapter<T> implements IDataAdapter<T> {
 
     private Class<T> clazz;
     private final Method[] methods;
@@ -39,12 +39,12 @@ public class BeanInvokeDynamicDataAdapter<T> implements IDataAdapter {
     }
 
     @Override
-    public Object getByName(String fieldName, Object data) {
+    public Object getByName(String fieldName, T data) {
         return getById(getIdByName(fieldName), data);
     }
 
     @Override
-    public Object getById(int fieldId, Object data) {
+    public Object getById(int fieldId, T data) {
         try {
             MethodHandle handle = methodHandles[fieldId];
             if (handle != null) {

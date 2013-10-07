@@ -18,13 +18,14 @@ import java.util.WeakHashMap;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class BeanCodeGenDataAdapter<T> implements IDataAdapter {
+public class BeanCodeGenDataAdapter<T> implements IDataAdapter<T> {
 
     private static final Map<Class, CachedDataHolder<GeneratedAdapter>> generatedCache = new WeakHashMap<Class, CachedDataHolder<GeneratedAdapter>>();
     private final Map<String, Integer> names;
-    private final GeneratedAdapter adapter;
+    private final GeneratedAdapter<T> adapter;
 
     public BeanCodeGenDataAdapter(Class<T> clazz) {
+        StringBuilder builder = null;
         try {
             CachedDataHolder<GeneratedAdapter> holder = generatedCache.get(clazz);
             if (holder != null) {
@@ -35,22 +36,21 @@ public class BeanCodeGenDataAdapter<T> implements IDataAdapter {
             names = new HashMap<String, Integer>();
             String className = clazz.getSimpleName();
             String packageName = this.getClass().getPackage().getName();
-            StringBuilder builder = new StringBuilder("package ").append(packageName).append(";\n\n");
+            builder = new StringBuilder("package ").append(packageName).append(";\n\n");
             builder.append("import ").append(clazz.getCanonicalName()).append(";\n\n")
-                .append("public class BeanAdapter implements ").append(GeneratedAdapter.class.getCanonicalName()).append(" {\n\n")
-                .append("public Object getValue(int id, Object data) {\n")
-                .append(className).append(" value = (").append(className).append(")data;\n")
-                .append("switch (id) {\n");
+                .append("public class BeanAdapter implements ").append(GeneratedAdapter.class.getCanonicalName()).append("<").append(className).append("> {\n\n")
+                .append("\tpublic Object getValue(int id, ").append(className).append(" data) {\n")
+                .append("\t\tswitch (id) {\n");
             BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
             int id = 0;
             for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-                builder.append("case ").append(id).append(":").append(" return value.").append(descriptor.getReadMethod().getName()).append("();\n");
+                builder.append("\t\t\tcase ").append(id).append(":").append(" return data.").append(descriptor.getReadMethod().getName()).append("();\n");
                 names.put(descriptor.getName().toLowerCase(), id);
                 id++;
             }
-            builder.append("}\n");
-            builder.append("throw new IllegalArgumentException(\"Unknown field Id: \" + id);\n");
-            builder.append("}\n");
+            builder.append("\t\t}\n");
+            builder.append("\t\tthrow new IllegalArgumentException(\"Unknown field Id: \" + id);\n");
+            builder.append("\t}\n");
             builder.append("}\n");
 
             JavaFileObject file = new StringJavaFileObject(packageName + ".BeanAdapter", builder.toString());
@@ -64,20 +64,20 @@ public class BeanCodeGenDataAdapter<T> implements IDataAdapter {
             if (!task.call()) {
                 throw new IllegalStateException("Couldn't compile generated adapter class: " + diagnostics.getDiagnostics());
             }
-            adapter = (GeneratedAdapter) fileManager.getClassLoader(null).loadClass(packageName + ".BeanAdapter").getConstructor().newInstance();
+            adapter = (GeneratedAdapter<T>) fileManager.getClassLoader(null).loadClass(packageName + ".BeanAdapter").getConstructor().newInstance();
             generatedCache.put(clazz, new CachedDataHolder<GeneratedAdapter>(adapter, names));
         } catch (Exception e) {
-            throw new IllegalArgumentException("Can't generate adapter class for bean: " + clazz, e);
+            throw new IllegalArgumentException("Can't generate adapter class for bean: " + clazz + " Code: " + builder, e);
         }
     }
 
     @Override
-    public Object getByName(String fieldName, Object data) {
+    public Object getByName(String fieldName, T data) {
         return getById(getIdByName(fieldName), data);
     }
 
     @Override
-    public Object getById(int fieldId, Object data) {
+    public Object getById(int fieldId, T data) {
         try {
             return adapter.getValue(fieldId, data);
         } catch (Exception e) {
@@ -94,8 +94,8 @@ public class BeanCodeGenDataAdapter<T> implements IDataAdapter {
         return id;
     }
 
-    public interface GeneratedAdapter {
-        public Object getValue(int id, Object data);
+    public interface GeneratedAdapter<T> {
+        public Object getValue(int id, T data);
     }
 }
 

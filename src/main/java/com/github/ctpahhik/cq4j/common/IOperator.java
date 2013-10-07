@@ -9,5 +9,5 @@ public interface IOperator<T> {
 
     public T evaluate(Object data); //TODO: Make 'data' -> generic type
 
-    public boolean isPureFunction();
+    public boolean isDeterministic();
 }

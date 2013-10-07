@@ -35,6 +35,11 @@ public class OrOperator extends AbstractOperator<Boolean> {
     }
 
     @Override
+    public boolean isDeterministic() {
+        return leftOp.isDeterministic() && rightOp.isDeterministic();
+    }
+
+    @Override
     public String toString() {
         return "(" + leftOp + ") OR (" + rightOp + ')';
     }

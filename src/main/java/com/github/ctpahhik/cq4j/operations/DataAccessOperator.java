@@ -26,7 +26,7 @@ public class DataAccessOperator<T> extends AbstractOperator<T> {
     }
 
     @Override
-    public boolean isPureFunction() {
+    public boolean isDeterministic() {
         return false;
     }
 
