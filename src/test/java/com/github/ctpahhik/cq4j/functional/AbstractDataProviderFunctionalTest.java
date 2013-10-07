@@ -1,5 +1,6 @@
-package com.github.ctpahhik.cq4j;
+package com.github.ctpahhik.cq4j.functional;
 
+import com.github.ctpahhik.cq4j.Query;
 import com.github.ctpahhik.cq4j.common.IDataAdapter;
 import com.github.ctpahhik.cq4j.performance.TestBean;
 import org.junit.AfterClass;
@@ -75,7 +76,7 @@ public abstract class AbstractDataProviderFunctionalTest {
         values.setParam(5);
         assertFalse(expr.isTrue(values));
         values.setParam(7);
-        assertNull(expr.isTrue(values));
+        assertNull(expr.evaluate(values));
     }
 
     @Test
@@ -99,7 +100,7 @@ public abstract class AbstractDataProviderFunctionalTest {
         values.setParam(1);
         assertFalse(expr.isTrue(values));
         values.setParam(7);
-        assertNull(expr.isTrue(values));
+        assertNull(expr.evaluate(values));
     }
 
     protected abstract IDataAdapter createDataAdapter(Class clazz);

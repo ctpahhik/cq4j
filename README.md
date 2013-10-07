@@ -13,8 +13,8 @@ Features:
     - [x] Java Beans using dynamic code generation
     - [ ] ResultSets? (?)
 - [ ] filtering queries on Collections, result as:
-    - [ ] new Collection
-    - [ ] Iterator (lazy)
+    - [x] new Collection
+    - [x] Iterator (lazy)
     - [ ] ResultSet (lazy)
 - [ ] multithreading queries
 - [ ] support ordering

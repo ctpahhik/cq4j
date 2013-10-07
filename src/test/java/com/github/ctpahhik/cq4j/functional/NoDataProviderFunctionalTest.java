@@ -1,5 +1,6 @@
-package com.github.ctpahhik.cq4j;
+package com.github.ctpahhik.cq4j.functional;
 
+import com.github.ctpahhik.cq4j.Query;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

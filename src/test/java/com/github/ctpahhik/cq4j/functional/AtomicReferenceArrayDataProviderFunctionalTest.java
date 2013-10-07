@@ -1,5 +1,6 @@
-package com.github.ctpahhik.cq4j;
+package com.github.ctpahhik.cq4j.functional;
 
+import com.github.ctpahhik.cq4j.Query;
 import com.github.ctpahhik.cq4j.data.AtomicReferenceArrayDataAdapter;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -88,7 +89,7 @@ public class AtomicReferenceArrayDataProviderFunctionalTest {
         values.set(0, 5);
         assertFalse(expr.isTrue(values));
         values.set(0, 7);
-        assertNull(expr.isTrue(values));
+        assertNull(expr.evaluate(values));
     }
 
     @Test

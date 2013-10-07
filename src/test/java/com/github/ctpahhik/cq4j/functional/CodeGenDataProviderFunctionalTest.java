@@ -1,4 +1,4 @@
-package com.github.ctpahhik.cq4j;
+package com.github.ctpahhik.cq4j.functional;
 
 import com.github.ctpahhik.cq4j.common.IDataAdapter;
 import com.github.ctpahhik.cq4j.data.BeanCodeGenDataAdapter;

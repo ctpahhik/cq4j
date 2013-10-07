@@ -16,6 +16,16 @@ public class TestBean {
     private Object param2;
     private Object param3;
 
+    public TestBean() {
+    }
+
+    public TestBean(Object param, Object param1, Object param2, Object param3) {
+        this.param = param;
+        this.param1 = param1;
+        this.param2 = param2;
+        this.param3 = param3;
+    }
+
     public int getA() {
         return a;
     }
@@ -78,5 +88,19 @@ public class TestBean {
 
     public void setParam3(Object param3) {
         this.param3 = param3;
+    }
+
+    @Override
+    public String toString() {
+        return "TestBean{" +
+                "a=" + a +
+                ", b='" + b + '\'' +
+                ", c=" + c +
+                ", d=" + d +
+                ", param=" + param +
+                ", param1=" + param1 +
+                ", param2=" + param2 +
+                ", param3=" + param3 +
+                '}';
     }
 }
