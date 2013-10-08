@@ -47,6 +47,9 @@ public class QueryFunctionalTest {
         bean3 = new TestBean(1, 5, 3, 4);
         data.add(bean3);
         data.add(new TestBean(1, 5, 3, 4));
+
+        Query.setDebug(true);
+        Query.setForkJoinSupported(false);
     }
 
     @After
@@ -87,6 +90,46 @@ public class QueryFunctionalTest {
     public void testFilterTwoFields() throws Exception {
         Query<TestBean> query = new Query<TestBean>("param1 >=5 and param = 1", TestBean.class);
         Collection<TestBean> result = query.filter(data);
+        assertNotEquals(data, result);
+        assertEquals(2, result.size());
+        assertFalse(result.contains(bean1));
+        assertFalse(result.contains(bean2));
+        assertTrue(result.contains(bean3));
+    }
+
+    @Test
+    public void testFilterParallelAll() throws Exception {
+        Query<TestBean> query = new Query<TestBean>("1=1", TestBean.class);
+        Collection<TestBean> result = query.filterParallel(data);
+        assertEquals(data, result);
+    }
+
+    @Test
+    public void testFilterParallelEquals() throws Exception {
+        Query<TestBean> query = new Query<TestBean>("param=1", TestBean.class);
+        Collection<TestBean> result = query.filterParallel(data);
+        assertNotEquals(data, result);
+        assertEquals(6, result.size());
+        assertTrue(result.contains(bean1));
+        assertFalse(result.contains(bean2));
+        assertTrue(result.contains(bean3));
+    }
+
+    @Test
+    public void testFilterParallelGT() throws Exception {
+        Query<TestBean> query = new Query<TestBean>("param > 1", TestBean.class);
+        Collection<TestBean> result = query.filterParallel(data);
+        assertNotEquals(data, result);
+        assertEquals(4, result.size());
+        assertFalse(result.contains(bean1));
+        assertTrue(result.contains(bean2));
+        assertFalse(result.contains(bean3));
+    }
+
+    @Test
+    public void testFilterParallelTwoFields() throws Exception {
+        Query<TestBean> query = new Query<TestBean>("param1 >=5 and param = 1", TestBean.class);
+        Collection<TestBean> result = query.filterParallel(data);
         assertNotEquals(data, result);
         assertEquals(2, result.size());
         assertFalse(result.contains(bean1));

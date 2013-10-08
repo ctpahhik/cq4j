@@ -17,7 +17,7 @@ Features:
     - [x] Iterator (lazy)
     - [ ] ResultSet (lazy)
 - [ ] support Maps
-- [ ] multithreading queries
+- [x] multithreading queries
 - [ ] support ordering
 - [ ] support queries with joins
 - [ ] indexed Collections
