@@ -1,8 +1,7 @@
 package com.github.ctpahhik.cq4j.functional;
 
-import com.github.ctpahhik.cq4j.Query;
+import com.github.ctpahhik.cq4j.Filter;
 import com.github.ctpahhik.cq4j.performance.TestBean;
-import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Verifications;
 import org.junit.After;
@@ -24,7 +23,7 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class QueryFunctionalTest {
+public class FilterFunctionalTest {
 
     private TestBean bean1;
     private TestBean bean2;
@@ -48,8 +47,8 @@ public class QueryFunctionalTest {
         data.add(bean3);
         data.add(new TestBean(1, 5, 3, 4));
 
-        Query.setDebug(true);
-        Query.setForkJoinSupported(false);
+        Filter.setDebug(true);
+        Filter.setForkJoinSupported(false);
     }
 
     @After
@@ -59,15 +58,15 @@ public class QueryFunctionalTest {
 
     @Test
     public void testFilterAll() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("1=1", TestBean.class);
-        Collection<TestBean> result = query.filter(data);
+        Filter<TestBean> filter = new Filter<TestBean>("1=1", TestBean.class);
+        Collection<TestBean> result = filter.filter(data);
         assertEquals(data, result);
     }
 
     @Test
     public void testFilterEquals() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param=1", TestBean.class);
-        Collection<TestBean> result = query.filter(data);
+        Filter<TestBean> filter = new Filter<TestBean>("param=1", TestBean.class);
+        Collection<TestBean> result = filter.filter(data);
         assertNotEquals(data, result);
         assertEquals(6, result.size());
         assertTrue(result.contains(bean1));
@@ -77,8 +76,8 @@ public class QueryFunctionalTest {
 
     @Test
     public void testFilterGT() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param > 1", TestBean.class);
-        Collection<TestBean> result = query.filter(data);
+        Filter<TestBean> filter = new Filter<TestBean>("param > 1", TestBean.class);
+        Collection<TestBean> result = filter.filter(data);
         assertNotEquals(data, result);
         assertEquals(4, result.size());
         assertFalse(result.contains(bean1));
@@ -88,8 +87,8 @@ public class QueryFunctionalTest {
 
     @Test
     public void testFilterTwoFields() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param1 >=5 and param = 1", TestBean.class);
-        Collection<TestBean> result = query.filter(data);
+        Filter<TestBean> filter = new Filter<TestBean>("param1 >=5 and param = 1", TestBean.class);
+        Collection<TestBean> result = filter.filter(data);
         assertNotEquals(data, result);
         assertEquals(2, result.size());
         assertFalse(result.contains(bean1));
@@ -99,15 +98,15 @@ public class QueryFunctionalTest {
 
     @Test
     public void testFilterParallelAll() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("1=1", TestBean.class);
-        Collection<TestBean> result = query.filterParallel(data);
+        Filter<TestBean> filter = new Filter<TestBean>("1=1", TestBean.class);
+        Collection<TestBean> result = filter.filterParallel(data);
         assertEquals(data, result);
     }
 
     @Test
     public void testFilterParallelEquals() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param=1", TestBean.class);
-        Collection<TestBean> result = query.filterParallel(data);
+        Filter<TestBean> filter = new Filter<TestBean>("param=1", TestBean.class);
+        Collection<TestBean> result = filter.filterParallel(data);
         assertNotEquals(data, result);
         assertEquals(6, result.size());
         assertTrue(result.contains(bean1));
@@ -117,8 +116,8 @@ public class QueryFunctionalTest {
 
     @Test
     public void testFilterParallelGT() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param > 1", TestBean.class);
-        Collection<TestBean> result = query.filterParallel(data);
+        Filter<TestBean> filter = new Filter<TestBean>("param > 1", TestBean.class);
+        Collection<TestBean> result = filter.filterParallel(data);
         assertNotEquals(data, result);
         assertEquals(4, result.size());
         assertFalse(result.contains(bean1));
@@ -128,8 +127,8 @@ public class QueryFunctionalTest {
 
     @Test
     public void testFilterParallelTwoFields() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param1 >=5 and param = 1", TestBean.class);
-        Collection<TestBean> result = query.filterParallel(data);
+        Filter<TestBean> filter = new Filter<TestBean>("param1 >=5 and param = 1", TestBean.class);
+        Collection<TestBean> result = filter.filterParallel(data);
         assertNotEquals(data, result);
         assertEquals(2, result.size());
         assertFalse(result.contains(bean1));
@@ -139,9 +138,9 @@ public class QueryFunctionalTest {
 
     @Test
     public void testIteratorAll() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("1=1", TestBean.class);
+        Filter<TestBean> filter = new Filter<TestBean>("1=1", TestBean.class);
         Collection<TestBean> result = new ArrayList<TestBean>();
-        for (TestBean bean : query.getIterable(data)) {
+        for (TestBean bean : filter.getIterable(data)) {
             result.add(bean);
         }
         assertEquals(data, result);
@@ -149,9 +148,9 @@ public class QueryFunctionalTest {
 
     @Test
     public void testIteratorEquals() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param=1", TestBean.class);
+        Filter<TestBean> filter = new Filter<TestBean>("param=1", TestBean.class);
         Collection<TestBean> result = new ArrayList<TestBean>();
-        for (TestBean bean : query.getIterable(data)) {
+        for (TestBean bean : filter.getIterable(data)) {
             result.add(bean);
         }
         assertNotEquals(data, result);
@@ -163,9 +162,9 @@ public class QueryFunctionalTest {
 
     @Test
     public void testIteratorGT() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param > 1", TestBean.class);
+        Filter<TestBean> filter = new Filter<TestBean>("param > 1", TestBean.class);
         Collection<TestBean> result = new ArrayList<TestBean>();
-        for (TestBean bean : query.getIterable(data)) {
+        for (TestBean bean : filter.getIterable(data)) {
             result.add(bean);
         }
         assertNotEquals(data, result);
@@ -177,9 +176,9 @@ public class QueryFunctionalTest {
 
     @Test
     public void testIteratorTwoFields() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param1 >=5 and param = 1", TestBean.class);
+        Filter<TestBean> filter = new Filter<TestBean>("param1 >=5 and param = 1", TestBean.class);
         Collection<TestBean> result = new ArrayList<TestBean>();
-        for (TestBean bean : query.getIterable(data)) {
+        for (TestBean bean : filter.getIterable(data)) {
             result.add(bean);
         }
         assertNotEquals(data, result);
@@ -191,9 +190,9 @@ public class QueryFunctionalTest {
 
     @Test
     public void testIteratorLazy() throws Exception {
-        Query<TestBean> query = new Query<TestBean>("param1 >=5 and param = 1", TestBean.class);
+        Filter<TestBean> filter = new Filter<TestBean>("param1 >=5 and param = 1", TestBean.class);
         data.add(mock);
-        Iterator<TestBean> result = query.getIterable(data).iterator();
+        Iterator<TestBean> result = filter.getIterable(data).iterator();
         result.next();
         new Verifications() {
             {

@@ -1,6 +1,6 @@
 package com.github.ctpahhik.cq4j.execution;
 
-import com.github.ctpahhik.cq4j.Query;
+import com.github.ctpahhik.cq4j.Filter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,10 +16,10 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<Collection<T>> {
 
     private static final int FORK_SIZE = 10; //TODO: find optimal
     private List<T> dataSource;
-    private Query<T> query;
+    private Filter<T> filter;
 
-    public RecursiveFilteringTask(Query<T> query, List<T> dataSource) {
-        this.query = query;
+    public RecursiveFilteringTask(Filter<T> filter, List<T> dataSource) {
+        this.filter = filter;
         this.dataSource = dataSource;
     }
 
@@ -31,9 +31,9 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<Collection<T>> {
         } else {
             Collection<T> result = new ArrayList<T>();
             int mid = size / 2;
-            RecursiveFilteringTask<T> first = new RecursiveFilteringTask<T>(query, dataSource.subList(0, mid));
+            RecursiveFilteringTask<T> first = new RecursiveFilteringTask<T>(filter, dataSource.subList(0, mid));
             first.fork();
-            RecursiveFilteringTask<T> second = new RecursiveFilteringTask<T>(query, dataSource.subList(mid, size));
+            RecursiveFilteringTask<T> second = new RecursiveFilteringTask<T>(filter, dataSource.subList(mid, size));
             second.fork();
             result.addAll(first.join());
             result.addAll(second.join());
@@ -42,6 +42,6 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<Collection<T>> {
     }
 
     private Collection<T> computeDirectly() {
-        return query.filter(dataSource);
+        return filter.filter(dataSource);
     }
 }

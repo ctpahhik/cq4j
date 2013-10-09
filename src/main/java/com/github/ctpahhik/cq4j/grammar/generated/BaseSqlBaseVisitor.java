@@ -82,6 +82,14 @@ public class BaseSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
+	@Override public T visitTableName(@NotNull BaseSqlParser.TableNameContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
 	@Override public T visitBetweenPredicate(@NotNull BaseSqlParser.BetweenPredicateContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -106,14 +114,6 @@ public class BaseSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
-	@Override public T visitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { return visitChildren(ctx); }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.
-	 */
 	@Override public T visitSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx) { return visitChildren(ctx); }
 
 	/**
@@ -122,7 +122,23 @@ public class BaseSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
+	@Override public T visitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
 	@Override public T visitComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
+	@Override public T visitFromElement(@NotNull BaseSqlParser.FromElementContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}
@@ -155,6 +171,14 @@ public class BaseSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
 	@Override public T visitInPredicate(@NotNull BaseSqlParser.InPredicateContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
+	@Override public T visitSelectElement(@NotNull BaseSqlParser.SelectElementContext ctx) { return visitChildren(ctx); }
 
 	/**
 	 * {@inheritDoc}

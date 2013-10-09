@@ -1,9 +1,7 @@
 package com.github.ctpahhik.cq4j.execution;
 
-import com.github.ctpahhik.cq4j.Query;
-import com.github.ctpahhik.cq4j.common.IOperator;
+import com.github.ctpahhik.cq4j.Filter;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
@@ -15,16 +13,16 @@ import java.util.concurrent.*;
  */
 public class CallableFilteringTask<T> implements Callable<Collection<T>> {
 
-    private Query<T> query;
+    private Filter<T> filter;
     private List<T> dataSource;
 
-    public CallableFilteringTask(Query<T> query, List<T> dataSource) {
-        this.query = query;
+    public CallableFilteringTask(Filter<T> filter, List<T> dataSource) {
+        this.filter = filter;
         this.dataSource = dataSource;
     }
 
     @Override
     public Collection<T> call() throws Exception {
-        return query.filter(dataSource);
+        return filter.filter(dataSource);
     }
 }

@@ -224,7 +224,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
             case BaseSqlParser.MINUS :
                 type = ArithmeticOperator.Type.MINUS;
                 break;
-            case BaseSqlParser.MULT :
+            case BaseSqlParser.STAR :
                 type = ArithmeticOperator.Type.MULT;
                 break;
             case BaseSqlParser.DIV :
@@ -271,26 +271,41 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
 
     @Override
     public IOperator visitQuery(@NotNull BaseSqlParser.QueryContext ctx) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return visitChildren(ctx);
     }
 
     @Override
     public IOperator visitOrderByClause(@NotNull BaseSqlParser.OrderByClauseContext ctx) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return visitChildren(ctx);
     }
 
     @Override
     public IOperator visitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return visitChildren(ctx);
     }
 
     @Override
     public IOperator visitSelectExpression(@NotNull BaseSqlParser.SelectExpressionContext ctx) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return visitChildren(ctx);
     }
 
     @Override
     public IOperator visitGroupByClause(@NotNull BaseSqlParser.GroupByClauseContext ctx) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return visitChildren(ctx);
+    }
+
+    @Override
+    public IOperator visitTableName(@NotNull BaseSqlParser.TableNameContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    @Override
+    public IOperator visitSelectElement(@NotNull BaseSqlParser.SelectElementContext ctx) {
+        return visitChildren(ctx);
+    }
+
+    @Override
+    public IOperator visitFromElement(@NotNull BaseSqlParser.FromElementContext ctx) {
+        return visitChildren(ctx);
     }
 }

@@ -68,6 +68,13 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSkipCondition(@NotNull BaseSqlParser.SkipConditionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#tableName}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTableName(@NotNull BaseSqlParser.TableNameContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#BetweenPredicate}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -89,13 +96,6 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitFloat(@NotNull BaseSqlParser.FloatContext ctx);
 
 	/**
-	 * Visit a parse tree produced by {@link BaseSqlParser#CaseOperator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx);
-
-	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#SearchedCaseOperator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -103,11 +103,25 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#CaseOperator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#ComparePredicate}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#fromElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFromElement(@NotNull BaseSqlParser.FromElementContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#IsNullPredicate}.
@@ -136,6 +150,13 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInPredicate(@NotNull BaseSqlParser.InPredicateContext ctx);
+
+	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#selectElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSelectElement(@NotNull BaseSqlParser.SelectElementContext ctx);
 
 	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#Boolean}.

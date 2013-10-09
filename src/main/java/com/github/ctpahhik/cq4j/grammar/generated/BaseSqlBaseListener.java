@@ -121,6 +121,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterTableName(@NotNull BaseSqlParser.TableNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitTableName(@NotNull BaseSqlParser.TableNameContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterBetweenPredicate(@NotNull BaseSqlParser.BetweenPredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -160,19 +173,6 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
 	@Override public void enterSearchedCaseOperator(@NotNull BaseSqlParser.SearchedCaseOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -186,6 +186,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitCaseOperator(@NotNull BaseSqlParser.CaseOperatorContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -193,6 +206,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterFromElement(@NotNull BaseSqlParser.FromElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitFromElement(@NotNull BaseSqlParser.FromElementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -245,6 +271,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * The default implementation does nothing.
 	 */
 	@Override public void exitInPredicate(@NotNull BaseSqlParser.InPredicateContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterSelectElement(@NotNull BaseSqlParser.SelectElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitSelectElement(@NotNull BaseSqlParser.SelectElementContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

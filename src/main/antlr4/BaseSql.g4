@@ -4,7 +4,7 @@ grammar BaseSql;
 
 PLUS    : '+' ;
 MINUS   : '-' ;
-MULT    : '*' ;
+STAR    : '*' ;
 DIV     : '/' ;
 MOD     : '%' ;
 AND     : 'and' ;
@@ -31,14 +31,23 @@ SELECT   : 'select' ;
 FROM     : 'from' ;
 JOIN     : 'join' ;
 WHERE    : 'where' ;
-ORDER_BY : 'order' 'by' ;
-GROUP_BY : 'group' 'by' ;
+ORDER    : 'order' ;
+GROUP    : 'group' ;
+BY       : 'by' ;
 
 CASE     : 'case' ;
 WHEN     : 'when' ;
 THEN     : 'then' ;
 ELSE     : 'else' ;
 END      : 'end' ;
+
+INNER    : 'inner' ;
+OUTER    : 'outer' ;
+CROSS    : 'cross' ;
+LEFT     : 'left' ;
+RIGHT    : 'right' ;
+FULL     : 'full' ;
+ON       : 'on' ;
 
 //LEXER
 
@@ -91,21 +100,34 @@ UNICODE_ESC
 //PARSER
 
 query :
-    SELECT selectExpression
-    FROM fromExpression
+    (SELECT selectExpression)?
+    (FROM fromExpression)?
     (WHERE whereClause)?
-    (GROUP_BY groupByClause)?
-    (ORDER_BY orderByClause)?
+    (GROUP BY groupByClause)?
+    (ORDER BY orderByClause)?
     ;
 
-selectExpression : .*? ;
-fromExpression : .*? ;
+selectExpression : selectElement (COMA selectElement)* ;
+
+selectElement : (STAR | condition (AS ID)?) ;
+
+tableName : ID (AS ID)? ;
+
+fromExpression : fromElement (COMA fromElement)* ;
+
+fromElement : 
+    tableName 
+    | L_PAREN fromElement R_PAREN 
+    | fromElement (
+        INNER 
+        | ((LEFT | RIGHT | FULL) OUTER? | OUTER )
+        | CROSS)? 
+    JOIN fromElement ON condition;
+
 groupByClause : .*? ;
 orderByClause : .*? ;
 
-    
-whereClause :
-    WHERE value=condition ;
+whereClause : value=condition ;
 
 simpleCondition : value=condition EOF;
 
@@ -142,7 +164,7 @@ comparison :
 expression:
     L_PAREN condition R_PAREN #SkipExpression 
     | operator = ( PLUS | MINUS ) value=condition #UnaryOperator
-    | left=expression operator=( MULT | DIV | MOD ) right=expression #ArithmeticOperator 
+    | left=expression operator=( STAR | DIV | MOD ) right=expression #ArithmeticOperator 
     | left=expression operator=( PLUS | MINUS ) right=expression #ArithmeticOperator 
     | CASE valueExpr=condition (WHEN whenExpr+=condition THEN thenExpr+=condition)+ (ELSE elseExpr=condition)? END #CaseOperator
     | CASE (WHEN whenExpr+=condition THEN thenExpr+=condition)+ (ELSE elseExpr=condition)? END #SearchedCaseOperator
