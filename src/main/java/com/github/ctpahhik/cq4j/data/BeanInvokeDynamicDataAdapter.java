@@ -80,4 +80,9 @@ public class BeanInvokeDynamicDataAdapter<T> implements IDataAdapter<T> {
 
         throw new IllegalArgumentException("Unknown field '" + fieldName + "'");
     }
+
+    @Override
+    public boolean hasName(String fieldName) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
 }

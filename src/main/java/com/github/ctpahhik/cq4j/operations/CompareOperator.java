@@ -35,6 +35,11 @@ public class CompareOperator extends AbstractOperator<Boolean> {
             return null;
         }
 
+        if (left instanceof Number || right instanceof Number) {
+            left = convertToBigDecimal(left);
+            right = convertToBigDecimal(right);
+        }
+
         int val = left.compareTo(right);
         switch (type) {
             case EQ: return val == 0;

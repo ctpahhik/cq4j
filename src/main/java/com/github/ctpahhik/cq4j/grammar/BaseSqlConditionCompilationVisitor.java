@@ -8,23 +8,34 @@ import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
 import com.github.ctpahhik.cq4j.operations.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides an empty implementation of {@link com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor},
  * which can be extended to create a visitor which only needs to handle a subset
  * of the available methods.
  */
-public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor<IOperator> implements BaseSqlVisitor<IOperator> {
+public class BaseSqlConditionCompilationVisitor extends BaseSqlAbstractVisitor<IOperator> implements BaseSqlVisitor<IOperator> {
 
-    private IDataAdapter dataAdapter;
+    private Map<String, IDataAdapter> dataAdapters;
     private FunctionsFactory factory;
 
-    public BaseSqlConditionCompilationVisitor(IDataAdapter dataAdapter, FunctionsFactory factory) {
-        this.dataAdapter = dataAdapter;
+    @SuppressWarnings("unchecked")
+    public BaseSqlConditionCompilationVisitor(Class... classes) {
+        this(buildAdaptersMap(classes), FunctionsFactory.getInstance());
+    }
+
+    public BaseSqlConditionCompilationVisitor(Map<String, IDataAdapter> dataAdapters) {
+        this(dataAdapters, FunctionsFactory.getInstance());
+    }
+
+    public BaseSqlConditionCompilationVisitor(Map<String, IDataAdapter> dataAdapters, FunctionsFactory factory) {
+        this.dataAdapters = dataAdapters;
         this.factory = factory;
     }
 
@@ -38,7 +49,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
 
     @Override
     public IOperator visitFloat(@NotNull BaseSqlParser.FloatContext ctx) {
-        return new ConstantOperator<Number>(Float.parseFloat(ctx.getText())); //TODO: parse Double and BigDecimal
+        return new ConstantOperator<Number>(new BigDecimal(ctx.getText())); //TODO: parse Double and Float
     }
 
     @Override
@@ -54,7 +65,25 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
 
     @Override
     public IOperator visitField(@NotNull BaseSqlParser.FieldContext ctx) {
-        return new DataAccessOperator(dataAdapter, ctx.getText());
+        IDataAdapter dataAdapter = null;
+        String fieldName = ctx.getText();
+        int pos = fieldName.indexOf(".");
+        if (pos > -1) {
+            String sourceName = fieldName.substring(0, pos);
+            fieldName = fieldName.substring(pos);
+            dataAdapter = dataAdapters.get(sourceName);
+        } else {
+            for (IDataAdapter adapter : dataAdapters.values()) {
+                if (adapter.hasName(fieldName)) {
+                    if (dataAdapter != null) {
+                        throw new IllegalArgumentException("Ambiguous field declaration: " + fieldName);
+                    }
+                    dataAdapter = adapter;
+                }
+            }
+        }
+
+        return new DataAccessOperator(dataAdapter, fieldName);
     }
 
     @Override
@@ -196,7 +225,7 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
 
     @Override
     public IOperator visitInteger(@NotNull BaseSqlParser.IntegerContext ctx) {
-        return new ConstantOperator<Number>(Integer.parseInt(ctx.getText())); //TODO: parse Long and BigInteger
+        return new ConstantOperator<Number>(new BigInteger(ctx.getText())); //TODO: parse Long and Integer
     }
 
     @Override
@@ -267,45 +296,5 @@ public class BaseSqlConditionCompilationVisitor extends AbstractParseTreeVisitor
         IOperator elseOp = (ctx.elseExpr == null) ? null : ctx.elseExpr.accept(this);
 
         return postProcess(new CaseOperator(ctx.valueExpr.accept(this), whenOps, thenOps, elseOp));
-    }
-
-    @Override
-    public IOperator visitQuery(@NotNull BaseSqlParser.QueryContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitOrderByClause(@NotNull BaseSqlParser.OrderByClauseContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitSelectExpression(@NotNull BaseSqlParser.SelectExpressionContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitGroupByClause(@NotNull BaseSqlParser.GroupByClauseContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitTableName(@NotNull BaseSqlParser.TableNameContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitSelectElement(@NotNull BaseSqlParser.SelectElementContext ctx) {
-        return visitChildren(ctx);
-    }
-
-    @Override
-    public IOperator visitFromElement(@NotNull BaseSqlParser.FromElementContext ctx) {
-        return visitChildren(ctx);
     }
 }

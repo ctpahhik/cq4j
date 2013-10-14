@@ -36,4 +36,9 @@ public class ArrayDataAdapter implements IDataAdapter<Object[]> {
         }
         return result;
     }
+
+    @Override
+    public boolean hasName(String fieldName) {
+        return fields.containsKey(fieldName);
+    }
 }

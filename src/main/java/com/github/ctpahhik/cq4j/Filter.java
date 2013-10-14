@@ -16,10 +16,7 @@ import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.TokenStream;
 
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -68,7 +65,9 @@ public class Filter<T> {
         Lexer lexer = new BaseSqlLexer(new ANTLRInputStream(new StringReader(query)));
         TokenStream tStream = new CommonTokenStream(lexer);
         BaseSqlParser parser = new BaseSqlParser(tStream);
-        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(adapter, new FunctionsFactory());
+        Map<String, IDataAdapter> adapters = new HashMap<String, IDataAdapter>();
+        adapters.put("", adapter);
+        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(adapters, new FunctionsFactory());
         operator = parser.simpleCondition().accept(visitor);
         if (isDebug()) {
             System.out.println(this);

@@ -37,4 +37,9 @@ public class AtomicReferenceArrayDataAdapter implements IDataAdapter<AtomicRefer
         }
         return result;
     }
+
+    @Override
+    public boolean hasName(String fieldName) {
+        return fields.containsKey(fieldName);
+    }
 }

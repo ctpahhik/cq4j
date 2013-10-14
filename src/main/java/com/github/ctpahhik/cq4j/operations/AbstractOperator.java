@@ -47,13 +47,18 @@ public abstract class AbstractOperator<T> implements IOperator<T> {
         if (first.equals(second)) {
             return 0;
         }
+        if (first instanceof Number || second instanceof Number) {
+            first = convertToBigDecimal(first);
+            second = convertToBigDecimal(second);
+        }
         if (first instanceof Comparable) {
+
             return ((Comparable) first).compareTo(second);
         }
         return null;
     }
 
-    protected BigDecimal convertToBigDecimal(Object value) {
+    protected static BigDecimal convertToBigDecimal(Object value) {
         if (value instanceof BigDecimal) {
             return (BigDecimal) value;
         } else if (value instanceof BigInteger) {

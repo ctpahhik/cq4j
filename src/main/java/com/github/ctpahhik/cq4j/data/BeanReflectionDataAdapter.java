@@ -69,4 +69,9 @@ public class BeanReflectionDataAdapter<T> implements IDataAdapter<T> {
         }
         return id;
     }
+
+    @Override
+    public boolean hasName(String fieldName) {
+        return names.containsKey(fieldName);
+    }
 }

@@ -94,6 +94,11 @@ public class BeanCodeGenDataAdapter<T> implements IDataAdapter<T> {
         return id;
     }
 
+    @Override
+    public boolean hasName(String fieldName) {
+        return names.containsKey(fieldName);
+    }
+
     public interface GeneratedAdapter<T> {
         public Object getValue(int id, T data);
     }

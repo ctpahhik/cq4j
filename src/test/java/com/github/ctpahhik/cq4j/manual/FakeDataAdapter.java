@@ -23,4 +23,9 @@ public class FakeDataAdapter implements IDataAdapter {
     public int getIdByName(String fieldName) {
         return 42;
     }
+
+    @Override
+    public boolean hasName(String fieldName) {
+        return true;
+    }
 }

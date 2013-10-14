@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public class FunctionsFactory {
 
+    private static final FunctionsFactory INSTANCE = new FunctionsFactory();
+
     private final Map<String, Class<? extends ISimpleFunction>> simpleFunctions = new HashMap<String,  Class<? extends ISimpleFunction>>();
     private final Map<String, Class<? extends IInFunction>> inFunctions = new HashMap<String, Class<? extends IInFunction>>();
 
@@ -22,9 +24,12 @@ public class FunctionsFactory {
         registerSimpleFunction("bitand", BitAnd.class);
 
         //concat
-        //mod
 
         registerInFunction("position_array", PositionArray.class);
+    }
+
+    public static FunctionsFactory getInstance() {
+        return INSTANCE;
     }
 
     public void registerSimpleFunction(String name, Class<? extends ISimpleFunction> clazz) {

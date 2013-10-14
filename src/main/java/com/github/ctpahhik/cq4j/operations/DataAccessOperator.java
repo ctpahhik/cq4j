@@ -2,6 +2,8 @@ package com.github.ctpahhik.cq4j.operations;
 
 import com.github.ctpahhik.cq4j.common.IDataAdapter;
 
+import java.util.Map;
+
 /**
  * TODO: JavaDoc
  *

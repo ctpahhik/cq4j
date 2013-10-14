@@ -12,4 +12,6 @@ public interface IDataAdapter<T> {
     public Object getById(int fieldId, T data);
 
     public int getIdByName(String fieldName);
+
+    public boolean hasName(String fieldName);
 }
