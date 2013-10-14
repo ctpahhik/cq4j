@@ -61,6 +61,13 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSimpleCondition(@NotNull BaseSqlParser.SimpleConditionContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#orderByElement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrderByElement(@NotNull BaseSqlParser.OrderByElementContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#SkipCondition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -20,4 +20,11 @@ public class FromElements {
     public Map<String, IDataAdapter> getDataAdapters() {
         return dataAdapters;
     }
+
+    @Override
+    public String toString() {
+        return "FromElements{" +
+                "dataAdapters=" + dataAdapters +
+                '}';
+    }
 }

@@ -86,6 +86,17 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitSimpleCondition(@NotNull BaseSqlParser.SimpleConditionContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#orderByElement}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrderByElement(@NotNull BaseSqlParser.OrderByElementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#orderByElement}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrderByElement(@NotNull BaseSqlParser.OrderByElementContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#SkipCondition}.
 	 * @param ctx the parse tree
 	 */

@@ -25,6 +25,6 @@ public class BaseSqlSelectCompilationVisitor extends BaseSqlAbstractVisitor<Sele
 
     @Override
     public SelectElements visitSelectExpression(@NotNull BaseSqlParser.SelectExpressionContext ctx) {
-        return null;
+        return new SelectElements(ctx.getText());
     }
 }

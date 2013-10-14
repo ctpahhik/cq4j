@@ -108,6 +108,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterOrderByElement(@NotNull BaseSqlParser.OrderByElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitOrderByElement(@NotNull BaseSqlParser.OrderByElementContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterSkipCondition(@NotNull BaseSqlParser.SkipConditionContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -42,4 +42,12 @@ public class OrderingComparator<T> implements Comparator<T> {
 
         return asc ? first.compareTo(second) : second.compareTo(first);
     }
+
+    @Override
+    public String toString() {
+        return "OrderingComparator{" +
+                "operator=" + operator +
+                ", asc=" + asc +
+                '}';
+    }
 }

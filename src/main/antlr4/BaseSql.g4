@@ -34,6 +34,8 @@ WHERE    : 'where' ;
 ORDER    : 'order' ;
 GROUP    : 'group' ;
 BY       : 'by' ;
+ASC      : 'asc';
+DESC      : 'desc';
 
 CASE     : 'case' ;
 WHEN     : 'when' ;
@@ -124,8 +126,11 @@ fromElement :
         | CROSS)? 
     JOIN fromElement ON condition;
 
-groupByClause : .*? ;
-orderByClause : .*? ;
+groupByClause : condition (COMA condition)* ;
+
+orderByClause : orderByElement (COMA orderByElement)* ;
+
+orderByElement : condition direction=(ASC | DESC)?;
 
 whereClause : value=condition ;
 

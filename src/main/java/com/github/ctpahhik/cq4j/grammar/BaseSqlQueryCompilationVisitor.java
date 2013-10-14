@@ -22,16 +22,22 @@ public class BaseSqlQueryCompilationVisitor extends BaseSqlAbstractVisitor<Query
     @SuppressWarnings("unchecked")
 	@Override public QueryElements visitQuery(@NotNull BaseSqlParser.QueryContext ctx) {
         QueryElements result = new QueryElements();
-        FromElements from = new BaseSqlFromCompilationVisitor(dataAdapters).visitFromExpression(ctx.fromExpression());
+        FromElements from = ctx.fromExpression().accept(new BaseSqlFromCompilationVisitor(dataAdapters));
         result.setFrom(from);
-        SelectElements select = new BaseSqlSelectCompilationVisitor(from.getDataAdapters()).visitSelectExpression(ctx.selectExpression());
+        SelectElements select = ctx.selectExpression().accept(new BaseSqlSelectCompilationVisitor(from.getDataAdapters()));
         result.setSelect(select);
-        IOperator<Boolean> where = new BaseSqlConditionCompilationVisitor(from.getDataAdapters()).visitWhereClause(ctx.whereClause());
-        result.setWhere(where);
-        List<OrderingComparator> orderBy = new BaseSqlOrderByCompilationVisitor(from.getDataAdapters()).visitOrderByClause(ctx.orderByClause());
-        result.setOrderBy(orderBy);
-        List<IOperator> groupBy = new BaseSqlGroupByCompilationVisitor(from.getDataAdapters()).visitGroupByClause(ctx.groupByClause());
-        result.setGroupBy(groupBy);
+        if (ctx.whereClause() != null) {
+            IOperator<Boolean> where = ctx.whereClause().accept(new BaseSqlConditionCompilationVisitor(from.getDataAdapters()));
+            result.setWhere(where);
+        }
+        if (ctx.orderByClause() != null) {
+            List<OrderingComparator> orderBy = ctx.orderByClause().accept(new BaseSqlOrderByCompilationVisitor(from.getDataAdapters()));
+            result.setOrderBy(orderBy);
+        }
+        if (ctx.groupByClause() != null) {
+            List<IOperator> groupBy = ctx.groupByClause().accept(new BaseSqlGroupByCompilationVisitor(from.getDataAdapters()));
+            result.setGroupBy(groupBy);
+        }
 
         return result;
     }

@@ -100,6 +100,14 @@ public abstract class BaseSqlAbstractVisitor<T> extends AbstractParseTreeVisitor
 	 */
 	@Override public T visitSimpleCondition(@NotNull BaseSqlParser.SimpleConditionContext ctx) { throw new UnsupportedOperationException(); }
 
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.
+     */
+    @Override public T visitOrderByElement(@NotNull BaseSqlParser.OrderByElementContext ctx) { throw new UnsupportedOperationException(); }
+
 	/**
 	 * {@inheritDoc}
 	 * <p/>
