@@ -1,9 +1,8 @@
 package com.github.ctpahhik.cq4j.manual;
 
-import com.github.ctpahhik.cq4j.common.IDataAdapter;
-import com.github.ctpahhik.cq4j.functions.FunctionsFactory;
 import com.github.ctpahhik.cq4j.common.IOperator;
-import com.github.ctpahhik.cq4j.grammar.BaseSqlConditionCompilationVisitor;
+import com.github.ctpahhik.cq4j.grammar.where.BaseSqlConditionCompilationVisitor;
+import com.github.ctpahhik.cq4j.grammar.from.FromElements;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlLexer;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -15,23 +14,19 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.lang.String;
 import java.lang.System;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * TODO: JavaDoc
  *
  * @author  Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class BaseSqlPostProcess {
+public class BaseSqlPostProcessTest {
 
     public static void main(String[] args) throws IOException {
         Lexer lexer = new BaseSqlLexer(new ANTLRInputStream(new StringReader("case asd when 12 then 3 when 4 then 5 else 6 end or case when 12>3 and true then 3 when 4<5 then 5 else 6 end or position_array(3 in \"[2,3,4]\")>0 or position_array(3 in \"[2,3,4]\" from 2)>0 and 3 between '' and 2 or -1+1*2>4 and a not in (2,3,5) or true and d is not null")));
         TokenStream tStream = new CommonTokenStream(lexer);
         BaseSqlParser parser = new BaseSqlParser(tStream);
-        Map<String, IDataAdapter> adapters = new HashMap<String, IDataAdapter>();
-        adapters.put("", new FakeDataAdapter());
-        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(adapters, new FunctionsFactory());
+        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(new FromElements(new FakeDataAdapter()));
         IOperator compiled = parser.simpleCondition().accept(visitor);
         System.out.println(compiled);
         int level = 0;

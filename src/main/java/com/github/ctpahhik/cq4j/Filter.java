@@ -7,7 +7,8 @@ import com.github.ctpahhik.cq4j.data.BeanInvokeDynamicDataAdapter;
 import com.github.ctpahhik.cq4j.execution.CallableFilteringTask;
 import com.github.ctpahhik.cq4j.execution.RecursiveFilteringTask;
 import com.github.ctpahhik.cq4j.functions.FunctionsFactory;
-import com.github.ctpahhik.cq4j.grammar.BaseSqlConditionCompilationVisitor;
+import com.github.ctpahhik.cq4j.grammar.where.BaseSqlConditionCompilationVisitor;
+import com.github.ctpahhik.cq4j.grammar.from.FromElements;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlLexer;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -65,13 +66,17 @@ public class Filter<T> {
         Lexer lexer = new BaseSqlLexer(new ANTLRInputStream(new StringReader(query)));
         TokenStream tStream = new CommonTokenStream(lexer);
         BaseSqlParser parser = new BaseSqlParser(tStream);
-        Map<String, IDataAdapter> adapters = new HashMap<String, IDataAdapter>();
-        adapters.put("", adapter);
-        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(adapters, new FunctionsFactory());
+        FromElements from = new FromElements(adapter);
+        BaseSqlConditionCompilationVisitor visitor = new BaseSqlConditionCompilationVisitor(from, new FunctionsFactory());
         operator = parser.simpleCondition().accept(visitor);
         if (isDebug()) {
             System.out.println(this);
         }
+    }
+
+    Filter(String query, IOperator operator) {
+        this.query = query;
+        this.operator = operator;
     }
 
     private static <V> IDataAdapter<V> getDefaultBeanDataAdapter(Class<V> clazz) {
@@ -107,25 +112,48 @@ public class Filter<T> {
     }
 
     public Object evaluate(T data) {
+        return evaluate(new Object[]{data});
+    }
+
+    public Object evaluate(Object[] data) {
         return operator.evaluate(data);
     }
 
     public boolean isTrue(T data) {
+        return isTrue(new Object[]{data});
+    }
+
+    public boolean isTrue(Object[] data) {
         Boolean result = (Boolean) operator.evaluate(data);
         return (result != null && result);
     }
 
-    public Collection<T> filter(Collection<T> dataSource) {
+    public List<T> filter(Collection<T> dataSource) {
+        Object[] dataArray = new Object[1];
         List<T> result = new ArrayList<T>();
         for (T data : dataSource) {
-            if ( data!=null && isTrue(data) ) {
+            dataArray[0] = data;
+            if ( data != null && isTrue(dataArray) ) {
                 result.add(data);
             }
         }
         return  result;
     }
 
-    public Collection<T> filterParallel(Collection<T> dataSource) {
+    List<Object[]> filterForProcessing(Collection<T> dataSource) {
+        Object[] dataArray = new Object[1];
+        List<Object[]> result = new ArrayList<Object[]>();
+        for (T data : dataSource) {
+            dataArray[0] = data;
+            if ( data != null && isTrue(dataArray) ) {
+                result.add(dataArray);
+                dataArray = new Object[1];
+            }
+        }
+        return result;
+    }
+
+    public List<T> filterParallel(Collection<T> dataSource) {
         List<T> dataList;
         if (dataSource instanceof List) {
             dataList = (List<T>) dataSource;
@@ -137,8 +165,8 @@ public class Filter<T> {
             return new ForkJoinPool().invoke(task);
         } else {
             int size = dataSource.size();
-            Collection<T> result = new ArrayList<T>();
-            Collection<Future<Collection<T>>> tasks = new ArrayList<Future<Collection<T>>>(size / SPLIT_SIZE);
+            List<T> result = new ArrayList<T>();
+            Collection<Future<List<T>>> tasks = new ArrayList<Future<List<T>>>(size / SPLIT_SIZE);
             int prev = 0;
             for (int curr = Math.min(SPLIT_SIZE, size); curr <= size; curr += SPLIT_SIZE) {
                 CallableFilteringTask<T> task = new CallableFilteringTask<T>(this, dataList.subList(prev, Math.min(curr, size)));
@@ -146,7 +174,7 @@ public class Filter<T> {
                 prev = curr;
             }
             try {
-                for (Future<Collection<T>> future : tasks) {
+                for (Future<List<T>> future : tasks) {
                     result.addAll(future.get());
                 }
             } catch (Exception e) {
@@ -187,9 +215,11 @@ public class Filter<T> {
             if (next != null) {
                 return true;
             }
+            Object[] dataArray = new Object[1];
             while (dataSource.hasNext()) {
                 T current = dataSource.next();
-                if ( current!=null && isTrue(current) ) {
+                dataArray[0] = current;
+                if ( current!=null && isTrue(dataArray) ) {
                     next = current;
                     return true;
                 }

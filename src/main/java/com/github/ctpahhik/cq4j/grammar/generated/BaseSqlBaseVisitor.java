@@ -146,6 +146,14 @@ public class BaseSqlBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.
 	 */
+	@Override public T visitTableField(@NotNull BaseSqlParser.TableFieldContext ctx) { return visitChildren(ctx); }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.
+	 */
 	@Override public T visitFromElement(@NotNull BaseSqlParser.FromElementContext ctx) { return visitChildren(ctx); }
 
 	/**

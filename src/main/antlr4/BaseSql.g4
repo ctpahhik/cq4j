@@ -19,6 +19,7 @@ IS      : 'is' ;
 L_PAREN : '(' ;
 R_PAREN : ')' ;
 COMA    : ',' ;
+DOT     : '.' ;
 
 LT_EQ   : '<=' | '!>' ;
 LT      : '<' ;
@@ -186,6 +187,7 @@ primitive :
     BOOLEAN #Boolean
     | NULL #Null
     | ID #Field
+    | ID DOT ID #TableField
     | INT #Integer
     | FLOAT #Float
     | STRING #String

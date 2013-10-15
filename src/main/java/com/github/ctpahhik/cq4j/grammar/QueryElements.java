@@ -1,6 +1,9 @@
 package com.github.ctpahhik.cq4j.grammar;
 
 import com.github.ctpahhik.cq4j.common.IOperator;
+import com.github.ctpahhik.cq4j.grammar.from.FromElements;
+import com.github.ctpahhik.cq4j.grammar.order.OrderingComparator;
+import com.github.ctpahhik.cq4j.grammar.select.SelectElements;
 
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class QueryElements {
     private SelectElements select;
     private FromElements from;
     private IOperator<Boolean> where;
-    private List<OrderingComparator> orderBy;
+    private OrderingComparator orderBy;
     private List<IOperator> groupBy;
 
     public SelectElements getSelect() {
@@ -40,11 +43,11 @@ public class QueryElements {
         this.where = where;
     }
 
-    public List<OrderingComparator> getOrderBy() {
+    public OrderingComparator getOrderBy() {
         return orderBy;
     }
 
-    public void setOrderBy(List<OrderingComparator> orderBy) {
+    public void setOrderBy(OrderingComparator orderBy) {
         this.orderBy = orderBy;
     }
 

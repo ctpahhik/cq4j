@@ -1,4 +1,4 @@
-package com.github.ctpahhik.cq4j.grammar;
+package com.github.ctpahhik.cq4j.grammar.select;
 
 import com.github.ctpahhik.cq4j.common.IDataAdapter;
 

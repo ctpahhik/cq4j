@@ -124,6 +124,13 @@ public interface BaseSqlVisitor<T> extends ParseTreeVisitor<T> {
 	T visitComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx);
 
 	/**
+	 * Visit a parse tree produced by {@link BaseSqlParser#TableField}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTableField(@NotNull BaseSqlParser.TableFieldContext ctx);
+
+	/**
 	 * Visit a parse tree produced by {@link BaseSqlParser#fromElement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

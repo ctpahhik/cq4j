@@ -18,7 +18,8 @@ Features:
     - [ ] ResultSet (lazy)
 - [ ] support Maps
 - [x] multithreading queries
-- [ ] support ordering
+- [x] support ordering
+- [ ] support queries for multiple data sources
 - [ ] support queries with joins
 - [ ] indexed Collections
 - [ ] support sub-queries (?)

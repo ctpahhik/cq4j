@@ -1,12 +1,11 @@
 // Generated from BaseSql.g4 by ANTLR 4.1
-package com.github.ctpahhik.cq4j.grammar;
+package com.github.ctpahhik.cq4j.grammar.from;
 import com.github.ctpahhik.cq4j.common.IDataAdapter;
-import com.github.ctpahhik.cq4j.common.IOperator;
+import com.github.ctpahhik.cq4j.grammar.BaseSqlAbstractVisitor;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,16 +16,16 @@ import java.util.Map;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public class BaseSqlGroupByCompilationVisitor extends BaseSqlAbstractVisitor<List<IOperator>> implements BaseSqlVisitor<List<IOperator>> {
+public class BaseSqlFromCompilationVisitor extends BaseSqlAbstractVisitor<FromElements> implements BaseSqlVisitor<FromElements> {
 
     private Map<String, IDataAdapter> dataAdapters;
 
-    public BaseSqlGroupByCompilationVisitor(Map<String, IDataAdapter> dataAdapters) {
+    public BaseSqlFromCompilationVisitor(Map<String, IDataAdapter> dataAdapters) {
         this.dataAdapters = dataAdapters;
     }
 
     @Override
-    public List<IOperator> visitGroupByClause(@NotNull BaseSqlParser.GroupByClauseContext ctx) {
-        return null;
+    public FromElements visitFromExpression(@NotNull BaseSqlParser.FromExpressionContext ctx) {
+        return new FromElements(dataAdapters);
     }
 }

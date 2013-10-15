@@ -14,4 +14,6 @@ public interface IDataAdapter<T> {
     public int getIdByName(String fieldName);
 
     public boolean hasName(String fieldName);
+
+    //public Class<T> getType();
 }

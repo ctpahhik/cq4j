@@ -225,6 +225,19 @@ public class BaseSqlBaseListener implements BaseSqlListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
+	@Override public void enterTableField(@NotNull BaseSqlParser.TableFieldContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitTableField(@NotNull BaseSqlParser.TableFieldContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
 	@Override public void enterFromElement(@NotNull BaseSqlParser.FromElementContext ctx) { }
 	/**
 	 * {@inheritDoc}

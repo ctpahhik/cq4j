@@ -1,14 +1,15 @@
 // Generated from BaseSql.g4 by ANTLR 4.1
-package com.github.ctpahhik.cq4j.grammar;
-import com.github.ctpahhik.cq4j.common.IDataAdapter;
+package com.github.ctpahhik.cq4j.grammar.order;
 import com.github.ctpahhik.cq4j.common.IOperator;
+import com.github.ctpahhik.cq4j.grammar.BaseSqlAbstractVisitor;
+import com.github.ctpahhik.cq4j.grammar.from.FromElements;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
+import com.github.ctpahhik.cq4j.grammar.where.BaseSqlConditionCompilationVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This class provides an empty implementation of {@link com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor},
@@ -18,31 +19,32 @@ import java.util.Map;
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public class BaseSqlOrderByCompilationVisitor extends BaseSqlAbstractVisitor<List<OrderingComparator>> implements BaseSqlVisitor<List<OrderingComparator>> {
+public class BaseSqlOrderByCompilationVisitor extends BaseSqlAbstractVisitor<OrderingComparator> implements BaseSqlVisitor<OrderingComparator> {
 
     private BaseSqlConditionCompilationVisitor conditionVisitor ;
 
-    public BaseSqlOrderByCompilationVisitor(Map<String, IDataAdapter> dataAdapters) {
-        this.conditionVisitor = new BaseSqlConditionCompilationVisitor(dataAdapters);
+    public BaseSqlOrderByCompilationVisitor(FromElements from) {
+        this.conditionVisitor = new BaseSqlConditionCompilationVisitor(from);
     }
 
     @Override
-    public List<OrderingComparator> visitOrderByClause(@NotNull BaseSqlParser.OrderByClauseContext ctx) {
+    @SuppressWarnings("unchecked")
+    public OrderingComparator visitOrderByClause(@NotNull BaseSqlParser.OrderByClauseContext ctx) {
         List<BaseSqlParser.OrderByElementContext> orderByElements = ctx.orderByElement();
 
-        List<OrderingComparator> result = new ArrayList<OrderingComparator>(orderByElements.size());
+        List<OrderingElement> result = new ArrayList<OrderingElement>(orderByElements.size());
         for (BaseSqlParser.OrderByElementContext element : orderByElements) {
             IOperator<Comparable> operator = element.condition().accept(conditionVisitor);
             if (element.direction == null) {
-                result.add(new OrderingComparator(operator));
+                result.add(new OrderingElement(operator));
             } else if (element.direction.getType() == BaseSqlParser.ASC) {
-                result.add(new OrderingComparator(operator, true));
+                result.add(new OrderingElement(operator, true));
             } else if (element.direction.getType() == BaseSqlParser.DESC) {
-                result.add(new OrderingComparator(operator, false));
+                result.add(new OrderingElement(operator, false));
             } else {
                 throw new IllegalArgumentException("Unknown ordering direction type: " + element.direction);
             }
         }
-        return result;
+        return new OrderingComparator(result);
     }
 }

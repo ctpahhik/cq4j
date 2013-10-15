@@ -1,11 +1,10 @@
 // Generated from BaseSql.g4 by ANTLR 4.1
-package com.github.ctpahhik.cq4j.grammar;
-import com.github.ctpahhik.cq4j.common.IDataAdapter;
+package com.github.ctpahhik.cq4j.grammar.select;
+import com.github.ctpahhik.cq4j.grammar.BaseSqlAbstractVisitor;
+import com.github.ctpahhik.cq4j.grammar.from.FromElements;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
 import org.antlr.v4.runtime.misc.NotNull;
-
-import java.util.Map;
 
 /**
  * This class provides an empty implementation of {@link com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor},
@@ -17,10 +16,7 @@ import java.util.Map;
  */
 public class BaseSqlSelectCompilationVisitor extends BaseSqlAbstractVisitor<SelectElements> implements BaseSqlVisitor<SelectElements> {
 
-    private Map<String, IDataAdapter> dataAdapters;
-
-    public BaseSqlSelectCompilationVisitor(Map<String, IDataAdapter> dataAdapters) {
-        this.dataAdapters = dataAdapters;
+    public BaseSqlSelectCompilationVisitor(FromElements from) {
     }
 
     @Override

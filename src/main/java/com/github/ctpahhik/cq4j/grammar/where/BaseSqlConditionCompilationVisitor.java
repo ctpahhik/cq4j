@@ -1,8 +1,9 @@
-package com.github.ctpahhik.cq4j.grammar;
+package com.github.ctpahhik.cq4j.grammar.where;
 
 import com.github.ctpahhik.cq4j.functions.FunctionsFactory;
-import com.github.ctpahhik.cq4j.common.IDataAdapter;
 import com.github.ctpahhik.cq4j.common.IOperator;
+import com.github.ctpahhik.cq4j.grammar.BaseSqlAbstractVisitor;
+import com.github.ctpahhik.cq4j.grammar.from.FromElements;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlParser;
 import com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor;
 import com.github.ctpahhik.cq4j.operations.*;
@@ -13,7 +14,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * This class provides an empty implementation of {@link com.github.ctpahhik.cq4j.grammar.generated.BaseSqlVisitor},
@@ -22,20 +22,15 @@ import java.util.Map;
  */
 public class BaseSqlConditionCompilationVisitor extends BaseSqlAbstractVisitor<IOperator> implements BaseSqlVisitor<IOperator> {
 
-    private Map<String, IDataAdapter> dataAdapters;
+    private FromElements from;
     private FunctionsFactory factory;
 
-    @SuppressWarnings("unchecked")
-    public BaseSqlConditionCompilationVisitor(Class... classes) {
-        this(buildAdaptersMap(classes), FunctionsFactory.getInstance());
+    public BaseSqlConditionCompilationVisitor(FromElements from) {
+        this(from, FunctionsFactory.getInstance());
     }
 
-    public BaseSqlConditionCompilationVisitor(Map<String, IDataAdapter> dataAdapters) {
-        this(dataAdapters, FunctionsFactory.getInstance());
-    }
-
-    public BaseSqlConditionCompilationVisitor(Map<String, IDataAdapter> dataAdapters, FunctionsFactory factory) {
-        this.dataAdapters = dataAdapters;
+    public BaseSqlConditionCompilationVisitor(FromElements from, FunctionsFactory factory) {
+        this.from = from;
         this.factory = factory;
     }
 
@@ -65,25 +60,19 @@ public class BaseSqlConditionCompilationVisitor extends BaseSqlAbstractVisitor<I
 
     @Override
     public IOperator visitField(@NotNull BaseSqlParser.FieldContext ctx) {
-        IDataAdapter dataAdapter = null;
         String fieldName = ctx.getText();
-        int pos = fieldName.indexOf(".");
-        if (pos > -1) {
-            String sourceName = fieldName.substring(0, pos);
-            fieldName = fieldName.substring(pos);
-            dataAdapter = dataAdapters.get(sourceName);
-        } else {
-            for (IDataAdapter adapter : dataAdapters.values()) {
-                if (adapter.hasName(fieldName)) {
-                    if (dataAdapter != null) {
-                        throw new IllegalArgumentException("Ambiguous field declaration: " + fieldName);
-                    }
-                    dataAdapter = adapter;
-                }
-            }
-        }
+        int tableId = from.getTableIdByFieldName(fieldName);
 
-        return new DataAccessOperator(dataAdapter, fieldName);
+        return new MultiTableDataAccessOperator(tableId, from.getDataAdapterById(tableId), fieldName);
+    }
+
+    @Override
+    public IOperator visitTableField(@NotNull BaseSqlParser.TableFieldContext ctx) {
+        String tableName = ctx.ID(0).getText();
+        String fieldName = ctx.ID(1).getText();
+        int tableId = from.getTableIdByName(tableName);
+
+        return new MultiTableDataAccessOperator(tableId, from.getDataAdapterById(tableId), fieldName);
     }
 
     @Override

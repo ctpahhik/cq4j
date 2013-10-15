@@ -185,6 +185,17 @@ public interface BaseSqlListener extends ParseTreeListener {
 	void exitComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx);
 
 	/**
+	 * Enter a parse tree produced by {@link BaseSqlParser#TableField}.
+	 * @param ctx the parse tree
+	 */
+	void enterTableField(@NotNull BaseSqlParser.TableFieldContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BaseSqlParser#TableField}.
+	 * @param ctx the parse tree
+	 */
+	void exitTableField(@NotNull BaseSqlParser.TableFieldContext ctx);
+
+	/**
 	 * Enter a parse tree produced by {@link BaseSqlParser#fromElement}.
 	 * @param ctx the parse tree
 	 */

@@ -172,6 +172,14 @@ public abstract class BaseSqlAbstractVisitor<T> extends AbstractParseTreeVisitor
 	 */
 	@Override public T visitComparePredicate(@NotNull BaseSqlParser.ComparePredicateContext ctx) { throw new UnsupportedOperationException(); }
 
+    /**
+     * {@inheritDoc}
+     * <p/>
+     * The default implementation returns the result of calling
+     * {@link #visitChildren} on {@code ctx}.
+     */
+    @Override public T visitTableField(@NotNull BaseSqlParser.TableFieldContext ctx) { throw new UnsupportedOperationException(); }
+
 	/**
 	 * {@inheritDoc}
 	 * <p/>

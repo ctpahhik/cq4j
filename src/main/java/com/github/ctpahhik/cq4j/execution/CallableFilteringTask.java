@@ -11,7 +11,7 @@ import java.util.concurrent.*;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class CallableFilteringTask<T> implements Callable<Collection<T>> {
+public class CallableFilteringTask<T> implements Callable<List<T>> {
 
     private Filter<T> filter;
     private List<T> dataSource;
@@ -22,7 +22,7 @@ public class CallableFilteringTask<T> implements Callable<Collection<T>> {
     }
 
     @Override
-    public Collection<T> call() throws Exception {
+    public List<T> call() throws Exception {
         return filter.filter(dataSource);
     }
 }

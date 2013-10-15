@@ -22,12 +22,11 @@ public class BetweenOperator extends AbstractOperator<Boolean> {
     @Override
     @SuppressWarnings("unchecked")
     public Boolean evaluate(Object data) {
-        Comparable value = valueOp.evaluate(data);
+        Comparable value = convertToBigDecimal(valueOp.evaluate(data));
         if (value == null) {
             return null;
         }
-        Comparable lower = lowerOp.evaluate(data);
-        Comparable upper = upperOp.evaluate(data);
+        Comparable lower = convertToBigDecimal(lowerOp.evaluate(data));
         Boolean result = null;
         if (lower != null) {
             if (value.compareTo(lower) >= 0) {
@@ -36,6 +35,7 @@ public class BetweenOperator extends AbstractOperator<Boolean> {
                 return false;
             }
         }
+        Comparable upper = convertToBigDecimal(upperOp.evaluate(data));
         if (upper != null) {
             if (value.compareTo(upper) <= 0) {
                 return result;

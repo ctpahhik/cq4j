@@ -12,7 +12,7 @@ import java.util.concurrent.RecursiveTask;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class RecursiveFilteringTask<T> extends RecursiveTask<Collection<T>> {
+public class RecursiveFilteringTask<T> extends RecursiveTask<List<T>> {
 
     private static final int FORK_SIZE = 10; //TODO: find optimal
     private List<T> dataSource;
@@ -24,12 +24,12 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<Collection<T>> {
     }
 
     @Override
-    protected Collection<T> compute() {
+    protected List<T> compute() {
         int size = dataSource.size();
         if (size < FORK_SIZE) {
             return computeDirectly();
         } else {
-            Collection<T> result = new ArrayList<T>();
+            List<T> result = new ArrayList<T>();
             int mid = size / 2;
             RecursiveFilteringTask<T> first = new RecursiveFilteringTask<T>(filter, dataSource.subList(0, mid));
             first.fork();
@@ -41,7 +41,7 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<Collection<T>> {
         }
     }
 
-    private Collection<T> computeDirectly() {
+    private List<T> computeDirectly() {
         return filter.filter(dataSource);
     }
 }

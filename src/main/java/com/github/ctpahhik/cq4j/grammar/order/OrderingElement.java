@@ -1,4 +1,4 @@
-package com.github.ctpahhik.cq4j.grammar;
+package com.github.ctpahhik.cq4j.grammar.order;
 
 import com.github.ctpahhik.cq4j.common.IOperator;
 
@@ -11,16 +11,16 @@ import java.util.Comparator;
  *
  * @author Denys Mostovliuk (mostovliuk@gmail.com)
  */
-public class OrderingComparator<T> implements Comparator<T> {
+public class OrderingElement<T> implements Comparator<T> {
 
     private IOperator<Comparable<Object>> operator;
     private boolean asc = true;
 
-    public OrderingComparator(IOperator<Comparable<Object>> operator) {
+    public OrderingElement(IOperator<Comparable<Object>> operator) {
         this.operator = operator;
     }
 
-    public OrderingComparator(IOperator<Comparable<Object>> operator, boolean asc) {
+    public OrderingElement(IOperator<Comparable<Object>> operator, boolean asc) {
         this.operator = operator;
         this.asc = asc;
     }
