@@ -17,23 +17,26 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<List<T>> {
     private static final int FORK_SIZE = 10; //TODO: find optimal
     private List<T> dataSource;
     private Filter<T> filter;
+    private int from;
+    private int to;
 
-    public RecursiveFilteringTask(Filter<T> filter, List<T> dataSource) {
+    public RecursiveFilteringTask(Filter<T> filter, List<T> dataSource, int from, int to) {
         this.filter = filter;
         this.dataSource = dataSource;
+        this.from = from;
+        this.to = to;
     }
 
     @Override
     protected List<T> compute() {
-        int size = dataSource.size();
-        if (size < FORK_SIZE) {
+        if ((to - from) < FORK_SIZE) {
             return computeDirectly();
         } else {
             List<T> result = new ArrayList<T>();
-            int mid = size / 2;
-            RecursiveFilteringTask<T> first = new RecursiveFilteringTask<T>(filter, dataSource.subList(0, mid));
+            int mid = (from + to) / 2;
+            RecursiveFilteringTask<T> first = new RecursiveFilteringTask<T>(filter, dataSource, from, mid);
             first.fork();
-            RecursiveFilteringTask<T> second = new RecursiveFilteringTask<T>(filter, dataSource.subList(mid, size));
+            RecursiveFilteringTask<T> second = new RecursiveFilteringTask<T>(filter, dataSource, from + split, to);
             second.fork();
             result.addAll(first.join());
             result.addAll(second.join());
@@ -42,6 +45,10 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<List<T>> {
     }
 
     private List<T> computeDirectly() {
-        return filter.filter(dataSource);
+        List<T> ds = new ArrayList<T>();
+        for (int i = from; i < to; i++) {
+            ds.add(dataSource.get(i));
+        }
+        return filter.filter(ds);
     }
 }
