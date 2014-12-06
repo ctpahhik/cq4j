@@ -20,9 +20,15 @@ public class RecursiveFilteringTask<T> extends RecursiveTask<List<T>> {
     private int from;
     private int to;
 
-    public RecursiveFilteringTask(Filter<T> filter, List<T> dataSource, int from, int to) {
+    public RecursiveFilteringTask(Filter<T> filter, List<T> dataSource) {
         this.filter = filter;
         this.dataSource = dataSource;
+        this.from = from;
+        this.to = to;
+    }
+
+    private RecursiveFilteringTask(Filter<T> filter, List<T> dataSource, int from, int to) {
+        this(filter, dataSource);
         this.from = from;
         this.to = to;
     }
